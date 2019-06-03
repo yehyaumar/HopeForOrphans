@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>Home | Hope For Orphans</title> {% endblock %}
+    <meta name="viewport" content="width=device-width, initital-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base_style.css' %}">
+
+    <script src="{% static 'jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'base_script.js' %}"></script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <style>.dev-page{visibility: hidden;}</style>
+
+</head>
+<body>
+    <div class="dev-page" id="page-container">
+        <div id="banner">
+            <b><a class="banner-content" id="logo" href="{% url 'index' %}">Hope for humanity</a></b></span>
+
+            <div class="banner-content" id="top-nav-div">
+                {% if user.is_authenticated %}
+                    <a class="top-nav-links" href="{%  url 'my-orphans'%}">My Orphans</a><a class="top-nav-links" href="{{ url }}">Donations</a><a class="top-nav-links" href="{{ url }}">Adoption Requests</a><a class="top-nav-links" href="{%  url 'profile' %}">Profile</a><a class="top-nav-links" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a class="top-nav-links" href="{{ url }}">Orphans</a><a class="top-nav-links" href="{{ url }}">Orphanages</a><a class="top-nav-links" href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+        <div id="content-wrap">
+            <div id="footer">
+                <table id="bottom-links-table">
+                    <tr>
+                        <td><a class="bottom-links" href="{{ url }}">About Us</a></td>
+                        <td><a class="bottom-links" href="{{ url }}">Orphans</a></td>
+                        <td><a class="bottom-links" href="{{ url }}">Volunteer</a></td>
+                    </tr>
+                    <tr>
+                        <td><a class="bottom-links" href="{{ url }}">Contact</a></td>
+                        <td><a class="bottom-links" href="{{ url }}">Orphanages</a></td>
+                        <td><a class="bottom-links" href="{{ url }}">Sponsor</a></td>
+                    </tr>
+                    <tr>
+                        <td><a class="bottom-links" href="{{ url }}">Feedback</a></td>
+                        <td><a class="bottom-links" href="{{ url }}">Donate</a></td>
+                        <td><a class="bottom-links" href="{{ url }}">Raise Awareness</a></td>
+                    </tr>
+                    <tr>
+                        <td><a class="bottom-links" href="{{ url }}">Help</a></td>
+                        <td><a class="bottom-links" href="{{ url }}">Adopt</a></td>
+                        <td><a class="bottom-links" href="{{ url }}">Campaign</a></td>
+                    </tr>
+                </table>
+                <div id="copyright">Copyright &copy; 2019 Hope For Orphans</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

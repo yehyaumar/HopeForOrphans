@@ -1,0 +1,81 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <div class="content-central">
+        <table class="image-btn-table">
+            <tr>
+                <td>
+                    <div class="profile-dp-div">
+                        <img class="profile-dp"
+                         src="{% if orphanage.display_pic %}
+                            {{ orphanage.display_pic.url }}
+                            {% else %}
+                            {% load static %}
+                            {% static 'orphanage_placeholder.jpg' %}
+                            {% endif %}" alt="Orphanage DP">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><a style="width: 100%;" class="link-buttons" href="{% url 'edit-profile' %}">Edit profile</a></td>
+            </tr>
+        </table>
+
+
+        <div class="profile-name">
+            {{ orphanage.name }}
+        </div>
+        <div id="orphanage-desc">
+            {{ orphanage.brief_desc }}
+        </div>
+
+        <table class="details-table">
+            <th colspan="2">Orphanage Details</th>
+            <tr>
+                <td>Reg Number: {{ orphanage.reg_num }}</td>
+                <td>Locality: {{ orphanage.address.locality }}</td>
+            </tr>
+            <tr>
+                <td>Estd. {{ orphanage.date_estd}}</td>
+                <td>Pincode: {{ orphanage.address.zip_pin_code }}</td>
+            </tr>
+            <tr>
+                <td>Ph No: {{ orphanage.contact.phone_number}}, {{ orphanage.contact.mobile_number }}</td>
+                <td>City: {{ orphanage.address.city}}</td>
+            </tr>
+            <tr>
+                <td>Email: {{ orphanage.user.email}}</td>
+                <td>State: {{ orphanage.address.state}}</td>
+            </tr>
+            <tr>
+                <td>Website: {{ orphanage.contact.website}}</td>
+                <td>Country: {{ orphanage.address.country}}</td>
+            </tr>
+        </table>
+        <div class="total-don-class" id="total-don-text-div">
+            Total Donation Raised Through This Platform
+        </div>
+        <div class="total-don-class" id="total-don-div">
+            Rs. {{ orphanage.total_donation_raised }}
+        </div>
+
+        <div id="table-div">
+            <table class="details-table" id="facilities-table">
+                <th>Facilities</th>
+                {% for f in orphanage.facilities.all%}
+                    <tr>
+                        <td>{{ f }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <table class="details-table" id="income-table">
+                <th>Income Sources</th>
+                {% for i in orphanage.income_source.all%}
+                    <tr>
+                        <td>{{ i }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

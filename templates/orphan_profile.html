@@ -1,0 +1,76 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <div class="content-central">
+        <table class="image-btn-table">
+            <tr>
+                <td>
+                    <div class="profile-dp-div">
+                    <img class="profile-dp"
+                     src="{% if orphan.avatar%}
+                        {{ orphan.avatar.url }}
+                        {% else %}
+                        {% load static %}
+                        {% static 'orphan-placeholder.jpg' %}
+                        {% endif %}" alt="Orphan DP">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><a class="link-buttons" href="">Request Adoption</a></td>
+            </tr>
+            <tr>
+                <td><a class="link-buttons" href="">Sponsor</a></td>
+            </tr>
+        </table>
+
+
+        <div class="profile-name">
+            {{ orphan.first_name}} {{ orphan.last_name}}
+        </div>
+        <div style="margin: 4px 0"><a class="card-orphanage-link" href="{% url 'profile' %}">{{ orphan.orphanage.name }}</a></div>
+
+        <div class="status-div">{{ orphan.get_status_display }}</div>
+{#        <div id="orphanage-desc">#}
+{#            {{ orphanage.brief_desc }}#}
+{#        </div>#}
+
+        <table class="details-table">
+            <th>Details</th>
+            <tr>
+                <td>Gender: {{ orphan.get_gender_display}}</td>
+            </tr>
+            <tr>
+                <td>DOB: {{ orphan.dob}}</td>
+            </tr>
+            <tr>
+                <td>Education: {{ orphan.education}}</td>
+            </tr>
+        </table>
+{#        <div class="total-don-class" id="total-don-text-div">#}
+{#            Total Donation Raised Through This Platform#}
+{#        </div>#}
+{#        <div class="total-don-class" id="total-don-div">#}
+{#            Rs. {{ orphanage.total_donation_raised }}#}
+{#        </div>#}
+{##}
+{#        <div id="table-div">#}
+            <table class="details-table">
+                <th>Hobbies</th>
+                {% for h in orphan.hobbies.all%}
+                    <tr>
+                        <td>{{ h }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+{#            <table class="details-table" id="income-table">#}
+{#                <th>Income Sources</th>#}
+{#                {% for i in orphanage.income_source.all%}#}
+{#                    <tr>#}
+{#                        <td>{{ i }}</td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            </table>#}
+{#        </div>#}
+    </div>
+{% endblock %}

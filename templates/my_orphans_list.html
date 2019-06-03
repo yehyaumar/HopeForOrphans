@@ -1,0 +1,39 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <div class="sub-title">
+        List of orphans from {{ orphanage.name }}
+        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>
+
+    </div>
+    <div class="content-central">
+        {% if orphans %}
+            <div class="accordian">
+                {% for o in orphans %}
+                    <div class="card-div" id="accordian-card">
+    {#                    <div class="dp-div">#}
+    {#                        <img class="orphan-avatar" src="{{ o.avatar.url }}">#}
+    {#                    </div>#}
+                        <div class="name-div">
+                            <a class="card-orphan-link" >{{ o.first_name }} {{ o.last_name }}</a>
+                            <a class="card-orphanage-link" href="{% url 'profile' %}">{{ o.orphanage.name }}</a>
+                        </div>
+                        <span class="status-span">{{ o.get_status_display }}</span>
+                    </div>
+                    <div class="card-div-content">
+                        <div class="card-div-content-wrapper">
+                            <span>Age</span>
+                            <span>Gender</span>
+                            <div class="card-buttons">
+                                <a class="link-buttons" href="">Sponsor</a>
+                                <a class="link-buttons" href="">Adoption Request</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="text-align: center">No orphans added yet</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+
+     <div class="sub-title">
+        Edit profile
+{#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
+
+    </div>
+    <div class="form-wrap-div">
+        <form enctype="multipart/form-data" method="post"s>
+{#            {{ user_form.email }}#}
+
+            Orphanage Details
+
+            <table>
+                <tr>
+                    <td>{{ profile_form.name }}</td>
+                    <td>{{ profile_form.reg_num }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">{{ user_form.email }}</td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}

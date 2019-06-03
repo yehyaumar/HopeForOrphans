@@ -1,0 +1,49 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <div class="sub-title">
+        Orphanage Login
+        <a class="link-in-subtitle-bar" href="{% url 'signup' %}">Signup</a>
+    </div>
+
+
+    <div class="form-wrap-div">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+
+    {#        Login<hr>#}
+
+            <table>
+                <tr>
+                    <td>
+                        {% if form.errors %}
+                            {% for key, error in form.errors.items %}
+
+                            <span>{{ error}}</span>
+
+                            {% endfor %}
+{#                            <p class="form-error">Your user name and password didn't match.<br>Please try again</p>#}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+    {#                <td>{{ form.username.label_tag }}</td>#}
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+    {#                <td>{{ form.password.label_tag }}</td>#}
+                    <td>{{ form.password }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Login"></td>
+                </tr>
+
+            </table>
+            <a id="lost_pass_link" href="{% url 'signup' %}">Lost password?</a>
+
+        </form>
+        <br>
+
+
+    </div>
+{% endblock %}
