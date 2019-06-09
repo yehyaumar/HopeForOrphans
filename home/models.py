@@ -14,18 +14,6 @@ class Hobby(models.Model):
         return self.name
 
 
-class BankDetail(models.Model): #PayU Money gateway
-    # account_num = models.IntegerField(help_text='16 digit account number')
-    # bank_name = models.CharField(max_length=128, help_text='Bank name')
-    # ifsc_code = models.CharField(max_length=64, help_text='IFSC code of bank branch')
-
-    MERCHANT_KEY = models.CharField(max_length=64,help_text='Merchant Key from PayU Money')
-    MERCHANT_SALT = models.CharField(max_length=64,help_text='Merchant Salt from PayU Money')
-
-    def __str__(self):
-        return '{0}: {1}'.format(self.MERCHANT_KEY, self.MERCHANT_SALT)
-
-
 class Orphan(models.Model):
     first_name = models.CharField(max_length=64, help_text='First Name')
     last_name = models.CharField(max_length=64, help_text='Last Name')
@@ -101,6 +89,18 @@ class OrphanagesImages(models.Model):
     orphanage = models.ForeignKey('Orphanage', on_delete=models.CASCADE)
 
 
+class BankDetail(models.Model): #PayU Money gateway
+    # account_num = models.IntegerField(help_text='16 digit account number')
+    # bank_name = models.CharField(max_length=128, help_text='Bank name')
+    # ifsc_code = models.CharField(max_length=64, help_text='IFSC code of bank branch')
+
+    merchant_key = models.CharField(max_length=64, help_text='Merchant Key from PayU Money')
+    merchant_salt = models.CharField(max_length=64, help_text='Merchant Salt from PayU Money')
+
+    def __str__(self):
+        return '{0}: {1}'.format(self.merchant_key, self.merchant_salt)
+
+
 class Address(models.Model):
     locality = models.CharField(max_length=64, help_text='Locality')
     city = models.CharField(max_length=64, help_text='City')
@@ -156,7 +156,7 @@ class Orphanage(models.Model):
     address = models.OneToOneField(Address, on_delete=models.SET_NULL, null=True, help_text='Address')
     contact = models.OneToOneField(Contact, on_delete=models.SET_NULL, null=True, help_text='Contact')
 
-    bank_details = models.OneToOneField(BankDetail, help_text='Bank details', on_delete=models.SET_NULL, null=True)
+    bank_details = models.OneToOneField(BankDetail, on_delete=models.SET_NULL, null=True, help_text='Bank details')
 
     def display_incomesrc(self):
         return ', '.join(income.name for income in self.income_source.all()[:3])

@@ -7,7 +7,7 @@
     </div>
 
 
-    <div class="form-wrap-div">
+    <div class="form-wrap-div login-form-wrap">
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
 
@@ -35,9 +35,11 @@
                     <td>{{ form.password }}</td>
                 </tr>
                 <tr>
-                    <td colspan="2"><input type="submit" value="Login"></td>
-                </tr>
+                    <td class="submit-td">
+                        <input type="submit" value="Login">
 
+                    </td>
+                </tr>
             </table>
             <a id="lost_pass_link" href="{% url 'signup' %}">Lost password?</a>
 

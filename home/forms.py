@@ -1,5 +1,8 @@
+from datetime import datetime
+
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from django.forms import CheckboxSelectMultiple, SelectDateWidget
 
 from home.models import Orphanage, Contact, Address, BankDetail, Orphan
 
@@ -7,12 +10,19 @@ from home.models import Orphanage, Contact, Address, BankDetail, Orphan
 class OrphanageSignUpForm(forms.ModelForm):
     class Meta:
         model = Orphanage
-        fields = ('name', 'display_pic', 'reg_num','brief_desc')
+        fields = ('name', 'display_pic', 'reg_num','brief_desc', 'income_source',
+                  'facilities', 'date_estd')
+
+        this_year = datetime.now().year
+
         widgets = {
             'name': forms.TextInput(attrs={'placeholder':'Name'}),
             'reg_num': forms.TextInput(attrs={'placeholder':'Registration Number'}),
             'brief_desc': forms.Textarea(attrs={'placeholder': 'Brief Description'}),
-            'display_pic': forms.FileInput(attrs={'class':'dp_upload', 'id':'file_upload'})
+            'display_pic': forms.FileInput(attrs={'class':'dp_upload', 'id':'file_upload'}),
+            'date_estd': SelectDateWidget(years=range(1900,this_year+1), attrs={'class': 'date-time'}),
+            'income_source': CheckboxSelectMultiple(),
+            'facilities': CheckboxSelectMultiple,
         }
 
 
@@ -43,7 +53,11 @@ class ContactForm(forms.ModelForm):
 class BankDetailForm(forms.ModelForm):
     class Meta:
         model = BankDetail
-        fields = ('MERCHANT_KEY', 'MERCHANT_SALT')
+        fields = ('merchant_key', 'merchant_salt')
+        widgets = {
+            'merchant_key': forms.TextInput(attrs={'placeholder': 'Merchant Key'}),
+            'merchant_salt': forms.TextInput(attrs={'placeholder': 'Merchant Salt'}),
+        }
 
 
 class OrphanForm(forms.ModelForm):

@@ -2,26 +2,165 @@
 
 {% block content %}
 
-     <div class="sub-title">
+    <div class="sub-title">
         Edit profile
-{#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
+        {#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
 
     </div>
     <div class="form-wrap-div">
-        <form enctype="multipart/form-data" method="post"s>
-{#            {{ user_form.email }}#}
+        <form enctype="multipart/form-data" method="post" s>
+            {% csrf_token %}
 
-            Orphanage Details
+            {#        {% if user_form.errors%}#}
+            {#            <p class="form-error">{{ user_form.errors }}</p> <br>#}
+            {#        {% endif %}#}
+
+            {% if profile_form.errors %}
+                <p class="form-error">{{ profile_form.errors }}</p> <br>
+            {% endif %}
+
+            {% if contact_form.errors %}
+                <p class="form-error">{{ contact_form.errors }}</p> <br>
+            {% endif %}
+
+            {% if address_form.errors %}
+                <p class="form-error">{{ address_form.errors }}</p> <br>
+            {% endif %}
+            {% if bank_details.errors %}
+                <p class="form-error">{{ bank_details.errors }}</p> <br>
+            {% endif %}
+
+            {#            {{ user_form.email }}#}
+
+            <div class="form-headings">Orphanage</div>
 
             <table>
                 <tr>
-                    <td>{{ profile_form.name }}</td>
-                    <td>{{ profile_form.reg_num }}</td>
+                    {#                <td>{{ profile_form.name.label_tag }}</td>#}
+                    <td colspan="2" class="">{{ profile_form.name }}</td>
+                    {#                <td>{{ profile_form.name.help_text }}</td>#}
                 </tr>
                 <tr>
-                    <td colspan="2">{{ user_form.email }}</td>
+                    {#                <td>{{ profile_form.reg_num.label_tag }}</td>#}
+                    <td>{{ profile_form.reg_num }}</td>
+                    <td>
+                        <div class="date-time-div">{{ profile_form.date_estd }}</div>
+                    </td>
+
+                    {#                <td>{{ profile_form.reg_num.help_text }}</td>#}
+                </tr>
+
+                <tr>
+                </tr>
+                <tr>
+                    {#                <td>{{ address_form.locality.label_tag }}</td>#}
+                    <td colspan="2">{{ address_form.locality }}</td>
+
+                </tr>
+                <tr>
+                    <td>{{ address_form.city }}</td>
+                    <td>{{ address_form.zip_pin_code }}</td>
+                </tr>
+                <tr>
+                    {#                <td>{{ address_form.state.label_tag }}</td>#}
+                    <td>{{ address_form.state }}</td>
+                    <td>{{ address_form.country }}</td>
+
+                </tr>
+                <tr>
+                    {#                <td>{{ address_form.country.label_tag }}</td>#}
+                </tr>
+                <tr>
+                    {#                <td>{{ contact_form.phone_number.label_tag }}</td>#}
+                    <td>{{ contact_form.phone_number }}</td>
+                    <td>{{ contact_form.mobile_number }}</td>
+
+                </tr>
+
+                <tr>
+                    {#                <td>{{ contact_form.mobile_number.label_tag }}</td>#}
+                </tr>
+
+                <tr>
+                    {#                <td>{{ contact_form.website.label_tag }}</td>#}
+                    <td colspan="2">{{ contact_form.website }}</td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="2">
+                        <div class="form-headings">Bank Details (Required to start recieving donations)</div>
+                    </td>
+                </tr>
+                <tr>
+                    {#                <td>{{ contact_form.phone_number.label_tag }}</td>#}
+                    <td>{{ bank_details.merchant_key }}</td>
+                    <td>{{ bank_details.merchant_salt }}</td>
+
+                </tr>
+                <tr>
+
+                    <td style="vertical-align: top">
+                        <div class="checkbox-wrap">
+                            <div class="form-headings heading-dropdowns" id="facility-div">Add Facilities</div>
+                            <div style="display: none">
+                                {% for facility in profile_form.facilities %}
+
+                                    <label class="checkbox-container" for="{{ facility.id_for_label }}">
+                                        {{ facility.tag }}
+                                        <span class="checkbox-label">{{ facility.choice_label }}</span>
+                                        <span class="checkbox-mark"></span>
+                                    </label>
+                                {% endfor %}
+                                <input type="text" placeholder="Facility" class="add_text_box" id="txt_add_facility"
+                                       style="display: none">
+                                <input type="button" class="add_btn" id="btn_add_facility" value="+">
+                            </div>
+                        </div>
+                    </td>
+
+                    <td style="vertical-align: top">
+                        <div class="checkbox-wrap">
+                            <div class="form-headings heading-dropdowns" id="income-div">Add Income Sources</div>
+                            <div style="display: none">
+                                {% for checkbox in profile_form.income_source %}
+                                    <label class="checkbox-container" for="{{ checkbox.id_for_label }}">
+                                        {{ checkbox.tag }}
+                                        <span class="checkbox-label">{{ checkbox.choice_label }}</span>
+                                        <span class="checkbox-mark"></span>
+                                    </label>
+                                {% endfor %}
+                                <input type="text" placeholder="Income Source" class="add_text_box"
+                                       id="txt_add_income_src"
+                                       style="display: none">
+                                <input type="button" class="add_btn" id="btn_add_income_src" value="+">
+                            </div>
+                        </div>
+                    </td>
+
+
+                </tr>
+                <tr>
+                    {#                <td>{{ profile_form.brief_desc.label_tag }}</td>#}
+                    <td colspan="2">{{ profile_form.brief_desc }}</td>
+                    {#                <td>{{ profile_form.brief_desc.help_text }}</td>#}
+                </tr>
+                {#                <tr>#}
+                {#                    <td colspan="2"><label id="file_label" for="file_upload">Upload Image</label></td>#}
+                {#                    <td>{{ profile_form.display_pic }}</td>#}
+                {#                <td>{{ profile_form.display_pic.help_text }}</td>#}
+                {#                </tr>#}
+                <tr>
+                    <td colspan="2" class="submit-td">
+                        <input type="submit" value="Save">
+
+                    </td>
                 </tr>
             </table>
+
+
         </form>
     </div>
+
+
 {% endblock %}

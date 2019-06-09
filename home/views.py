@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
 from datetime import date, datetime
 
 
 # Create your views here.
-from home.forms import OrphanageSignUpForm, AddressForm, ContactForm
-from home.models import Address, Orphanage, Contact, BankDetail
+from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm
+from home.models import Address, Orphanage, Contact, BankDetail, IncomeSource, Facilities
 from users.forms import CustomUserCreationForm
 
 
@@ -77,23 +77,42 @@ def edit_profile(request):
     user = request.user
     orphanage = Orphanage.objects.get(user=user)
 
-    user_form = CustomUserCreationForm(data=request.POST or None, instance=user)
+    # user_form = CustomUserCreationForm(data=request.POST or None, instance=user)
     profile_form = OrphanageSignUpForm(data=request.POST or None, instance=orphanage)
+    address_form = AddressForm(data=request.POST or None, instance=orphanage.address)
+    contact_form = ContactForm(data=request.POST or None, instance=orphanage.contact)
+    bank_details_form = BankDetailForm(data=request.POST or None, instance=orphanage.bank_details)
 
     if request.method == 'POST':
-        if user_form.is_valid() and profile_form.is_valid():
+        if profile_form.is_valid() and address_form.is_valid() \
+                and contact_form.is_valid() and bank_details_form.is_valid():
 
-            user = user_form.save(commit=False)
+            # user = user_form.save(commit=False)
             profile = profile_form.save(commit=False)
-            user.is_active = False
 
-            user.save()
-            profile.user = user
+            address = address_form.save()
+            contact = contact_form.save()
+            bank_details = bank_details_form.save()
+            # user.save()
+            # profile.user = user
+            profile.address = address
+            profile.contact = contact
+            profile.bank_details = bank_details
+
+            if 'display_pic' in request.FILES:
+                profile.display_pic = request.FILES['display_pic']
+
             profile.save()
+            profile_form.save_m2m()
+            return redirect('profile')
+        else:
+            print(profile_form.errors, address_form.errors, contact_form.errors)
 
     return render(request, 'edit_profile.html',{
-        'user_form': user_form,
         'profile_form': profile_form,
+        'address_form': address_form,
+        'contact_form': contact_form,
+        'bank_details': bank_details_form,
     })
 
 
@@ -125,3 +144,37 @@ def orphan_detail(request, pk):
         'orphan': orphan,
     })
 
+
+def add_income_src(request):
+    income_src = request.POST.get('value', None)
+    print(income_src)
+    # orphanage = Orphanage.objects.get(user=request.user)
+    # i_s = orphanage.income_source.create(name=income_src)
+
+    result = IncomeSource.objects.create(name=income_src)
+    data = {
+        'success': False
+    }
+
+    if result:
+        data['success'] = True
+    else:
+        data['success'] = False
+
+    return JsonResponse(data)
+
+
+def add_facility(request):
+    facility = request.POST.get('value', None)
+    # orphanage = Orphanage.objects.get(user=request.user)
+    # fc = orphanage.facilities.create(name=facility)
+    result = Facilities.objects.create(name=facility)
+    data = {
+        'success': False
+    }
+
+    if result:
+        data['success'] = True
+    else:
+        data['success'] = False
+    return JsonResponse(data)
