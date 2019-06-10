@@ -196,6 +196,12 @@ a {
 
 }
 
+.col-label{
+    text-align: left;
+    font-size: 14px;
+    padding: 6px 0 0 2px;
+}
+
 .heading-dropdowns{
     cursor: pointer;
 }
@@ -220,16 +226,23 @@ a {
 .signup-form-wrap{
     margin: 6rem 30%;
 }
+.orphan-form-wrap{
+   margin: 6rem 35%;
+}
 
 form {
     text-align: center;
     display: inline-block;
-
-
 }
 
 .date-time-div{
     display: flex;
+
+}
+
+.date-time{
+    font-size: 16px;
+    margin: 1px;
 
 }
 
@@ -246,10 +259,16 @@ textarea, input, select{
 select{
     font-size: 18px;
     width: 100%;
-    flex-grow: 1;
-
-
+    /*flex-grow: 1;*/
 }
+
+/*#id_dob_day{*/
+/*    width: 60%;*/
+/*}*/
+/*#id_dob_month{*/
+/*    width: 85%;*/
+/*}*/
+
 select::-ms-expand {
     display: none;
 }

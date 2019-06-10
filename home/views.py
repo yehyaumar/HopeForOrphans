@@ -5,13 +5,12 @@ from datetime import date, datetime
 
 
 # Create your views here.
-from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm
+from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm, OrphanForm
 from home.models import Address, Orphanage, Contact, BankDetail, IncomeSource, Facilities
 from users.forms import CustomUserCreationForm
 
 
 def index(request):
-
 
     return render(request, 'index.html')
 
@@ -118,8 +117,24 @@ def edit_profile(request):
 
 @login_required
 def add_orphan(request):
-    
-    pass
+    user = request.user
+    orphanage = Orphanage.objects.get(user=user)
+
+    orphan_form = OrphanForm(data=request.POST)
+    if request.method == 'POST':
+        if orphan_form.is_valid():
+            orphan = orphan_form.save(commit=False)
+            orphan.orphanage = orphanage
+            orphan.save()
+            return redirect('my-orphans')
+        else:
+            print(orphan_form.errors)
+    else:
+        orphan_form = OrphanForm()
+
+    return render(request, 'add_orphan_form.html', {
+        'orphan_form': orphan_form
+    })
 
 
 @login_required

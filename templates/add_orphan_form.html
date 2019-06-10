@@ -1,0 +1,58 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <div class="sub-title">
+        Add Orphan
+        {#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
+
+    </div>
+
+
+    <div class="form-wrap-div orphan-form-wrap">
+        <form method="post">
+            {% csrf_token %}
+
+
+            {% if orphan_form.errors %}
+                <p class="form-error">{{ orphan_form.errors }}</p> <br>
+            {% endif %}
+
+            <table>
+                <tr><td colspan="2" class="col-label">Name</td></tr>
+                <tr>
+                    <td>{{ orphan_form.first_name }}</td>
+                    <td>{{ orphan_form.last_name }}</td>
+                </tr>
+                <tr>
+                    <td class="col-label">
+                        Gender
+                    </td>
+
+                    <td class="col-label">
+                        Status
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ orphan_form.gender }}</td>
+                    <td>
+                        {{ orphan_form.status }}
+                    </td>
+
+                </tr>
+                <tr><td colspan="2" class="col-label">Date of Birth</td></tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div class="date-time-div">{{ orphan_form.dob }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="submit-td">
+                        <input type="submit" value="Save">
+
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}

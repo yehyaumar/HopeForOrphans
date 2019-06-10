@@ -8,7 +8,7 @@
 
     </div>
     <div class="form-wrap-div">
-        <form enctype="multipart/form-data" method="post" s>
+        <form enctype="multipart/form-data" method="post">
             {% csrf_token %}
 
             {#        {% if user_form.errors%}#}
@@ -35,19 +35,27 @@
             <div class="form-headings">Orphanage</div>
 
             <table>
+
                 <tr>
-                    {#                <td>{{ profile_form.name.label_tag }}</td>#}
-                    <td colspan="2" class="">{{ profile_form.name }}</td>
-                    {#                <td>{{ profile_form.name.help_text }}</td>#}
+                    <td colspan="2" class="col-label">Name</td>
                 </tr>
                 <tr>
-                    {#                <td>{{ profile_form.reg_num.label_tag }}</td>#}
+                    <td colspan="2" class="">{{ profile_form.name }}</td>
+                </tr>
+
+                <tr>
+                    <td class="col-label">Reg. Number</td>
+                    <td class="col-label">Estd. Date</td>
+                </tr>
+                <tr>
                     <td>{{ profile_form.reg_num }}</td>
                     <td>
                         <div class="date-time-div">{{ profile_form.date_estd }}</div>
                     </td>
+                </tr>
 
-                    {#                <td>{{ profile_form.reg_num.help_text }}</td>#}
+                <tr>
+                    <td class="col-label">Address</td>
                 </tr>
 
                 <tr>
@@ -65,10 +73,10 @@
                     {#                <td>{{ address_form.state.label_tag }}</td>#}
                     <td>{{ address_form.state }}</td>
                     <td>{{ address_form.country }}</td>
-
                 </tr>
+
                 <tr>
-                    {#                <td>{{ address_form.country.label_tag }}</td>#}
+                    <td class="col-label">Contact</td>
                 </tr>
                 <tr>
                     {#                <td>{{ contact_form.phone_number.label_tag }}</td>#}
@@ -76,11 +84,9 @@
                     <td>{{ contact_form.mobile_number }}</td>
 
                 </tr>
-
                 <tr>
-                    {#                <td>{{ contact_form.mobile_number.label_tag }}</td>#}
+                    <td class="col-label">Website</td>
                 </tr>
-
                 <tr>
                     {#                <td>{{ contact_form.website.label_tag }}</td>#}
                     <td colspan="2">{{ contact_form.website }}</td>
@@ -93,11 +99,15 @@
                     </td>
                 </tr>
                 <tr>
-                    {#                <td>{{ contact_form.phone_number.label_tag }}</td>#}
+                    <td class="col-label">Merchant Key</td>
+                    <td class="col-label">Merchant Salt</td>
+                </tr>
+                <tr>
                     <td>{{ bank_details.merchant_key }}</td>
                     <td>{{ bank_details.merchant_salt }}</td>
 
                 </tr>
+
                 <tr>
 
                     <td style="vertical-align: top">
@@ -139,6 +149,10 @@
                     </td>
 
 
+                </tr>
+
+                <tr>
+                    <td class="col-label">Brief Description</td>
                 </tr>
                 <tr>
                     {#                <td>{{ profile_form.brief_desc.label_tag }}</td>#}

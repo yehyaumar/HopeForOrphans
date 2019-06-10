@@ -63,8 +63,14 @@ class BankDetailForm(forms.ModelForm):
 class OrphanForm(forms.ModelForm):
     class Meta:
         model = Orphan
-        fields = ('first_name', 'last_name', 'dob', 'gender', 'status', 'hobbies',
-                  'education', 'date_joined', 'avatar')
+        fields = ('first_name', 'last_name', 'dob', 'gender', 'status')
+        widgets = {
+            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
+            'gender': forms.Select(),
+            'dob': forms.SelectDateWidget(years=range(1990, 2019), attrs={'class': 'date-time'}),
+            'status': forms.Select(),
+        }
 
 
 class MyAuthForm(AuthenticationForm):

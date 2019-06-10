@@ -28,7 +28,8 @@ class Orphan(models.Model):
     gender = models.CharField(
         max_length=1,
         choices=GENDER_CHOICE,
-        help_text='Gender'
+        help_text='Gender',
+        default='m',
     )
 
     orphanage = models.ForeignKey('Orphanage', on_delete=models.CASCADE)
