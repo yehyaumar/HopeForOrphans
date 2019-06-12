@@ -204,9 +204,10 @@ a {
 
 .heading-dropdowns{
     cursor: pointer;
+    background-color: #E86252;
 }
 .heading-dropdowns:hover{
-    background-color: #81ba6a;
+    background-color: #EC7E71;
 }
 
 .form-wrap-div {
@@ -349,7 +350,7 @@ input[type=submit]:hover {
 }
 
 .checkbox-container input:checked ~ .checkbox-mark {
-    background-color: #2196F3;
+    background-color: #E86252;
 
 }
 
@@ -447,6 +448,18 @@ table td{
 
 .link-buttons:hover, .link-buttons:active {
     background-color: darkseagreen;
+}
+
+.red-buttons{
+    color: white;
+    font-size: 14px;
+    background-color: #E86252;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+}
+
+.red-buttons:hover{
+    background-color: #EC7E71;
 }
 
 .profile-dp-div {
@@ -624,11 +637,11 @@ table td{
 }
 
 .add_btn{
-    color: white;
-    background-color: #CBCBCB;
+/*    color: white;*/
+/*    background-color: #CBCBCB;*/
     width: 100%;
 }
 
 .add_btn:hover{
-    background-color: #E2E2E2;
+    /*background-color: #E2E2E2;*/
 }

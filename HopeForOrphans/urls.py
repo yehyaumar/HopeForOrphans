@@ -33,8 +33,6 @@ urlpatterns += [
     path('signup/', home_views.signup, name='signup'),
     path('login/', auth_views.LoginView.as_view(authentication_form=MyAuthForm), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('ajax/add_income_src', home_views.add_income_src, name='add-income-src'),
-    path('ajax/add_facility', home_views.add_facility, name='add-facility'),
 
 ]
 

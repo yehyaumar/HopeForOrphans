@@ -19,7 +19,7 @@ function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
-function post_req(txt, url) {
+function set_csrftoken() {
     const csrftoken = getCookie('csrftoken');
 
     $.ajaxSetup({
@@ -30,6 +30,10 @@ function post_req(txt, url) {
             }
         },
     });
+}
+
+function post_req(txt, url) {
+    set_csrftoken();
 
     $.ajax({
         url: url,
@@ -96,14 +100,54 @@ jQuery(document).ready(function ($) {
     });
 
 
-
     $("#btn_add_facility").click(function () {
-        handler($('.checkbox-wrap:eq(0)'), $('#txt_add_facility'), 'facilities', '/ajax/add_facility');
+        handler($('.checkbox-wrap:eq(0)'), $('#txt_add_facility'), 'facilities', '/home/ajax/add_facility');
 
     });
-$("#btn_add_income_src").click(function () {
-        handler($('.checkbox-wrap:eq(1)'), $('#txt_add_income_src'), 'income_source', '/ajax/add_income_src');
+    $("#btn_add_income_src").click(function () {
+        handler($('.checkbox-wrap:eq(1)'), $('#txt_add_income_src'), 'income_source', '/home/ajax/add_income_src');
 
     });
+
+    var len = $('.orphans-pk').length;
+    console.log(len);
+
+    // for(var i=0; i<len; i++) {
+    //     $('.edit-buttons:eq(i)').click(function () {
+    //         console.log('hello');
+    //
+    //     })
+    // }
+
+    $('.delete-buttons').on("click", function (event) {
+        var target = $(event.target);
+        var pk = target.parent().parent().find('span').first().text();
+        set_csrftoken();
+
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/delete-orphan',
+            data: {
+                'pk': pk
+            },
+            dataType: 'json',
+
+            success: function (data) {
+                if (data.success) {
+                    location.reload();
+                    console.log('Success')
+                } else
+                    console.log('Failure')
+            }
+        });
+    });
+
+    $('.edit-buttons').on("click", function (event) {
+        var target = $(event.target);
+        var pk = target.parent().parent().find('span').first().text();
+
+        window.location = "/home/edit-orphan/" + pk;
+    })
+
 
 });

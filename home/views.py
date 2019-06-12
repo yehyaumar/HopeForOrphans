@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from datetime import date, datetime
 
 
 # Create your views here.
 from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm, OrphanForm
-from home.models import Address, Orphanage, Contact, BankDetail, IncomeSource, Facilities
+from home.models import Address, Orphanage, Contact, BankDetail, IncomeSource, Facilities, Orphan
 from users.forms import CustomUserCreationForm
 
 
@@ -135,6 +135,56 @@ def add_orphan(request):
     return render(request, 'add_orphan_form.html', {
         'orphan_form': orphan_form
     })
+
+
+@login_required
+def edit_orphan(request, pk):
+    user = request.user
+    orphanage = Orphanage.objects.get(user=user)
+    # check if the orphan belong to this user
+
+    orphan = Orphan.objects.get(pk=pk)
+
+    if orphan in orphanage.orphan_set.all():
+
+        print(orphan)
+
+        orphan_form = OrphanForm(data=request.POST or None, instance=orphan)
+
+        if request.method == 'POST':
+            if orphan_form.is_valid():
+                orphan_form.save()
+                return redirect('my-orphans')
+
+            else:
+                print(orphan_form.errors)
+
+        return render(request, 'edit_orphan_form.html', {
+            'orphan_form': orphan_form
+        })
+    else:
+        return HttpResponse(status=403)
+
+@login_required
+def delete_orphan(request):
+    if request.POST:
+        pk = request.POST['pk']
+        result = False
+
+        if pk:
+            orphan = get_object_or_404(Orphan, pk=pk)
+            result = orphan.delete()
+
+        data = {
+            'success': False
+        }
+
+        if result:
+            data['success'] = True
+        else:
+            data['success'] = False
+
+        return JsonResponse(data)
 
 
 @login_required
