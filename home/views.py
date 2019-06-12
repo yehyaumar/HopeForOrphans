@@ -193,6 +193,7 @@ def my_orphans(request):
 
     orphanage = Orphanage.objects.get(user=user)
     orphans = orphanage.orphan_set.all()
+
     return render(request, 'my_orphans_list.html',{
         'orphanage':orphanage,
         'orphans': orphans

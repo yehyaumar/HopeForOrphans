@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.urls import reverse
 
@@ -19,6 +21,13 @@ class Orphan(models.Model):
     last_name = models.CharField(max_length=64, help_text='Last Name')
 
     dob = models.DateField(help_text='Date of Birth')
+
+    @property
+    def calculate_age(self):
+        if self.dob:
+            return int((datetime.now().year - self.dob.year))
+
+    # age = calculate_age()
 
     GENDER_CHOICE = (
         ('m', 'Male'),

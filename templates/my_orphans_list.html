@@ -24,8 +24,17 @@
                     <div class="card-div-content">
                         <div class="card-div-content-wrapper">
                             <span class="orphans-pk" style="display: none">{{ o.pk }}</span>
-                            <span>Age</span>
-                            <span>Gender</span>
+
+                            <div class="age-gender-div">
+                                <span class="age-gender-label">Age</span>
+                                <span class="age-gender-content">{{ o.calculate_age }}</span>
+                            </div>
+
+                            <div class="age-gender-div">
+                                <span class="age-gender-label">Gender</span>
+                                <span class="age-gender-content">{{ o.get_gender_display }}</span>
+                            </div>
+
                             <div class="card-buttons">
                                 {#                                <a class="link-buttons" href="">Sponsor</a>#}
                                 {#                                <a class="link-buttons" href="">Adoption Request</a>#}

@@ -577,6 +577,22 @@ table td{
 
 }
 
+.age-gender-div{
+    display: flex;
+    flex-direction: column;
+}
+
+.age-gender-label{
+    background-color: #393939;
+    color: white;
+    padding: 3px 4px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+}
+.age-gender-content{
+    padding: 2px;
+}
+
 .dp-div {
     float: left;
     height: 40px;
