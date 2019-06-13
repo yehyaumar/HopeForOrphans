@@ -661,3 +661,40 @@ table td{
 .add_btn:hover{
     /*background-color: #E2E2E2;*/
 }
+
+/*Index Page*/
+
+.background-div{
+
+}
+
+.intro-text-div{
+    display: inline-block;
+    position: absolute;
+    top: 16rem;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    font-size: 20px;
+}
+
+.intro-text-div-left{
+    left: 20rem;
+
+}
+
+.intro-text-div-right{
+    right: 20rem;
+    top: 32rem;
+}
+
+.intro-text-heading{
+    font-size: 24px;
+    color: #92d876;
+}
+
+.intro-text-content{
+    line-height: 1.8rem;
+}
