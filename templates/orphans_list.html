@@ -3,8 +3,8 @@
 {% block content %}
 
     <div class="sub-title">
-        List of orphans from {{ orphanage.name }}
-        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>
+        List of orphans from all Orphanages
+{#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
 
     </div>
     <div class="content-central">
@@ -42,13 +42,13 @@
                             <div class="card-buttons">
                                 {#                                <a class="link-buttons" href="">Sponsor</a>#}
                                 {#                                <a class="link-buttons" href="">Adoption Request</a>#}
-                                {% if user.is_authenticated %}
-                                    <input class="red-buttons edit-buttons" id="" type="button" value="Edit">
-                                    <input class="red-buttons delete-buttons" id="" type="button" value="Delete">
-                                {% else %}
-                                    <a class="link-buttons" href="">Sponsor</a>
-                                    <a class="link-buttons" href="">Adoption Request</a>
-                                {% endif %}
+{#                                {% if user.is_authenticated %}#}
+{#                                    <input class="red-buttons edit-buttons" id="" type="button" value="Edit">#}
+{#                                    <input class="red-buttons delete-buttons" id="" type="button" value="Delete">#}
+{#                                {% else %}#}
+                                    <a class="red-buttons" href="">Sponsor</a>
+                                    <a class="red-buttons" href="">Adoption Request</a>
+{#                                {% endif %}#}
 
                             </div>
                         </div>

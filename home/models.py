@@ -171,12 +171,12 @@ class Orphanage(models.Model):
     def display_incomesrc(self):
         return ', '.join(income.name for income in self.income_source.all()[:3])
 
-    income_source = models.ManyToManyField(IncomeSource, help_text='Source of Income')
+    income_source = models.ManyToManyField(IncomeSource, help_text='Source of Income', blank=True)
 
     def display_facilities(self):
         return ', '.join(facility.name for facility in self.facilities.all()[:3])
 
-    facilities = models.ManyToManyField(Facilities, help_text='Facilities Available')
+    facilities = models.ManyToManyField(Facilities, help_text='Facilities Available', blank=True)
 
     total_donation_raised = models.FloatField(help_text='Total donation raised through this website',
                                               null=True, blank=True)

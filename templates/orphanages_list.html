@@ -1,0 +1,39 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <div class="sub-title">
+        List of all Orphanages
+        {#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
+
+    </div>
+    <div class="content-central">
+        {% if orphanages %}
+            <div class="list-labels orphanage-list-label">
+                <div>Name</div>
+                <div>No. of Orphans</div>
+            </div>
+
+            {% for orphanage in orphanages %}
+                <div class="card-div">
+
+                    <div class="dp-div">
+                        <img class="orphan-avatar" src="{{ orphanage.display_pic.url }}">
+                    </div>
+
+                    <div class="name-div name-div-orphanage">
+                        <a class="orphanage-link-list" href="{{ url }}">{{ orphanage.name }}</a>
+                        {{ orphanage.address.state }}
+                    </div>
+                    <div style="align-self: center">
+                        {{ orphanage.orphan_set.count }}
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+            <p style="text-align: center">No orphanages added yet</p>
+        {% endif %}
+    </div>
+{% endblock %}

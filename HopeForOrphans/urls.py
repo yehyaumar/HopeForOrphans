@@ -29,16 +29,16 @@ urlpatterns = [
 ]
 
 urlpatterns += [
+    path('', include('index.urls')),
     path('home/', include('home.urls')),
     path('signup/', home_views.signup, name='signup'),
     path('login/', auth_views.LoginView.as_view(authentication_form=MyAuthForm), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-
 ]
-
-urlpatterns += [
-    path('', RedirectView.as_view(url='/home/', permanent=True))
-]
+#
+# urlpatterns += [
+#     path('', RedirectView.as_view(url='/home/', permanent=True))
+# ]
 
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

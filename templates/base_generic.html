@@ -34,7 +34,7 @@
                 {% if user.is_authenticated %}
                     <a class="top-nav-links" href="{%  url 'my-orphans'%}">My Orphans</a><a class="top-nav-links" href="{{ url }}">Donations</a><a class="top-nav-links" href="{{ url }}">Adoption Requests</a><a class="top-nav-links" href="{%  url 'profile' %}">Profile</a><a class="top-nav-links" href="{% url 'logout' %}">Logout</a>
                 {% else %}
-                    <a class="top-nav-links" href="{{ url }}">Orphans</a><a class="top-nav-links" href="{{ url }}">Orphanages</a><a class="top-nav-links" href="{% url 'login' %}">Login</a>
+                    <a class="top-nav-links" href="{% url 'orphans' %}">Orphans</a><a class="top-nav-links" href="{% url 'orphanages' %}">Orphanages</a><a class="top-nav-links" href="{% url 'login' %}">Login</a>
                 {% endif %}
             </div>
         </div>
@@ -47,12 +47,12 @@
                 <table id="bottom-links-table">
                     <tr>
                         <td><a class="bottom-links" href="{{ url }}">About Us</a></td>
-                        <td><a class="bottom-links" href="{{ url }}">Orphans</a></td>
+                        <td><a class="bottom-links" href="{% url 'orphans' %}">Orphans</a></td>
                         <td><a class="bottom-links" href="{{ url }}">Volunteer</a></td>
                     </tr>
                     <tr>
                         <td><a class="bottom-links" href="{{ url }}">Contact</a></td>
-                        <td><a class="bottom-links" href="{{ url }}">Orphanages</a></td>
+                        <td><a class="bottom-links" href="{% url 'orphanages' %}">Orphanages</a></td>
                         <td><a class="bottom-links" href="{{ url }}">Sponsor</a></td>
                     </tr>
                     <tr>

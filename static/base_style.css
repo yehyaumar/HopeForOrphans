@@ -613,6 +613,7 @@ table td{
     margin: 0 2px;
     display: flex;
     flex-direction: column;
+    flex-grow: 2;
     /*justify-content:center;*/
     /*align-items: center;*/
 }
@@ -649,7 +650,7 @@ table td{
 
 /*Edit Profile*/
 #id_email {
-    color: #81ba6a;
+    /*color: #81ba6a;*/
 }
 
 .add_btn{
@@ -697,4 +698,38 @@ table td{
 
 .intro-text-content{
     line-height: 1.8rem;
+}
+
+
+/*Orphanages List*/
+
+.orphanage-link-list:link, .orphanage-link-list:visited{
+    font-size: 18px;
+    /*color: #E86252;*/
+    color: #5f8a4f;
+}
+
+.orphanage-link-list:hover, .orphanage-link-list:active{
+    /*color: #EC7E71;*/
+    color: #81ba6a;
+}
+
+.name-div-orphanage{
+    margin-left: 12px;
+}
+
+.list-labels{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    background-color: #EC7E71;
+    color: white;
+
+}
+.orphanage-list-label{
+    padding: 8px 10px 8px 4rem;
+
+}
+.orphans-list-label{
+    padding: 8px 16px;
 }

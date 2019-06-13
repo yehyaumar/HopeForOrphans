@@ -10,11 +10,6 @@ from home.models import Address, Orphanage, Contact, BankDetail, IncomeSource, F
 from users.forms import CustomUserCreationForm
 
 
-def index(request):
-
-    return render(request, 'index.html')
-
-
 def signup(request):
     if request.method == 'POST':
         user_form = CustomUserCreationForm(data=request.POST)
