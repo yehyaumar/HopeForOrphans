@@ -25,3 +25,10 @@ def orphans_list(request):
     })
 
 
+def orphanage_view(request, pk):
+
+    orphanage = Orphanage.objects.get(pk=pk)
+
+    print(orphanage)
+
+    return render(request, 'orphanage_profile.html', {'orphanage': orphanage})

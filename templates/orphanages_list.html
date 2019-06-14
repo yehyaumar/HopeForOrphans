@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="name-div name-div-orphanage">
-                        <a class="orphanage-link-list" href="{{ url }}">{{ orphanage.name }}</a>
+                        <a class="orphanage-link-list" href="{% url 'orphanage_view' orphanage.pk %}">{{ orphanage.name }}</a>
                         {{ orphanage.address.state }}
                     </div>
                     <div style="align-self: center">

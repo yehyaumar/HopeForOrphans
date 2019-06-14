@@ -11,7 +11,7 @@
         {% if orphans %}
             <div class="list-labels orphans-list-label">
                 <div>Name</div>
-                <div>Status</div>
+                <div>Adoption Status</div>
             </div>
             <div class="accordian">
                 {% for o in orphans %}
@@ -21,9 +21,12 @@
                         {#                    </div>#}
                         <div class="name-div">
                             <a class="card-orphan-link">{{ o.first_name }} {{ o.last_name }}</a>
-                            <a class="card-orphanage-link" href="{% url 'profile' %}">{{ o.orphanage.name }}</a>
+                            <a class="card-orphanage-link" href="{% url 'orphanage_view' o.orphanage.pk %}">{{ o.orphanage.name }}</a>
                         </div>
-                        <span class="status-span">{{ o.get_status_display }}</span>
+                        <span class="status-span {% if o.status == 'a' %}status-span-green
+                                {% elif o.status == 'n' %}status-span-blue{% else %}status-span-black{% endif %}">
+                            {{ o.get_status_display }}
+                        </span>
                     </div>
                     <div class="card-div-content">
                         <div class="card-div-content-wrapper">
@@ -47,7 +50,9 @@
 {#                                    <input class="red-buttons delete-buttons" id="" type="button" value="Delete">#}
 {#                                {% else %}#}
                                     <a class="red-buttons" href="">Sponsor</a>
-                                    <a class="red-buttons" href="">Adoption Request</a>
+                                    {% if o.status == 'a' %}
+                                        <a class="red-buttons" href="">Adoption Request</a>
+                                    {% endif %}
 {#                                {% endif %}#}
 
                             </div>

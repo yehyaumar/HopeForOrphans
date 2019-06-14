@@ -17,7 +17,13 @@
                 </td>
             </tr>
             <tr>
-                <td><a style="width: 100%;" class="link-buttons" href="{% url 'edit-profile' %}">Edit profile</a></td>
+                <td>
+                    {% if user.is_authenticated and user.email == orphanage.user.email%}
+                        <a style="width: 100%;" class="link-buttons" href="{% url 'edit-profile' %}">Edit profile</a>
+                    {% else %}
+                        <a style="width: 100%;" class="link-buttons" href="{% url 'index' %}">Donate</a>
+                    {% endif %}
+                </td>
             </tr>
         </table>
 

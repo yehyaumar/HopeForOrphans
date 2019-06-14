@@ -462,6 +462,10 @@ table td{
     background-color: #EC7E71;
 }
 
+/*.red-button-sponsor{*/
+/*    line-height: 4rem;*/
+/*}*/
+
 .profile-dp-div {
     height: 200px;
     width: 200px;
@@ -633,13 +637,20 @@ table td{
 .status-span {
     color: white;
     float: right;
-    background-color: #81ba6a;
     align-self: center;
     padding: 4px;
     border-radius: 2px;
 }
 
-
+.status-span-green{
+    background-color: #81ba6a;
+}
+.status-span-blue{
+    background-color: cornflowerblue;
+}
+.status-span-black{
+    background-color: #393939;
+}
 .status-div {
     display: inline-block;
     color: white;
