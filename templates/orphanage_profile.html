@@ -19,9 +19,10 @@
             <tr>
                 <td>
                     {% if user.is_authenticated and user.email == orphanage.user.email%}
-                        <a style="width: 100%;" class="link-buttons" href="{% url 'edit-profile' %}">Edit profile</a>
+                        <a class="link-buttons" href="{% url 'edit-profile' %}">Edit profile</a>
                     {% else %}
-                        <a style="width: 100%;" class="link-buttons" href="{% url 'index' %}">Donate</a>
+                        <a  class="link-buttons" href="{% url 'orphanages_orphan_list' orphanage.pk %}">View Orphans</a>
+                        <a class="link-buttons" href="{% url 'index' %}">Donate</a>
                     {% endif %}
                 </td>
             </tr>
