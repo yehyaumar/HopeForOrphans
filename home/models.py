@@ -1,4 +1,5 @@
-from datetime import datetime
+import uuid
+from datetime import datetime, date
 
 from django.db import models
 from django.urls import reverse
@@ -215,15 +216,43 @@ class Donor(models.Model):
         ordering = ['first_name', 'last_name', 'amount_donated']
 
 
+def generate_urid():
+    year = date.today().year
+    month = date.today().month
+    day = date.today().day
+
+    last_request = AdoptionRequest.objects.all().order_by('request_id').last()
+    if not last_request:
+        return 'HOP-' + str(year) + str(month).zfill(2) + str(day).zfill(2) + '000000'
+
+    request_id = last_request.request_id
+    request_id_number = int(request_id[12:18])
+    request_id_day = int(request_id[10:12])
+    request_id_month = int(request_id[8:10])
+    request_id_year = int(request_id[4:8])
+
+    print(request_id_day, request_id_month, request_id_year)
+    if day != request_id_day and month != request_id_month and year != request_id_year:
+        request_id_number = 0
+
+    new_request_id_number = request_id_number + 1
+    new_request_id = 'HOP-' + str(year) + str(month).zfill(2) + str(day).zfill(2) + \
+                     str(new_request_id_number).zfill(6)
+    return new_request_id
+
+
 class AdoptionRequest(models.Model):
     first_name = models.CharField(max_length=64, help_text='First Name')
     last_name = models.CharField(max_length=64, help_text='Last Name')
 
-    date = models.DateField(auto_now_add=True, help_text='Adoption request date/time')
+    request_id = models.CharField(primary_key=True, default=generate_urid,editable=False, max_length=18)
+
+    request_date = models.DateTimeField(auto_now_add=True, help_text='Adoption request date/time')
 
     dob = models.DateField(help_text='Date of Birth (For age purpose)')
     phone_number = models.CharField(max_length=32, help_text='Phone number')
-    email = models.EmailField(help_text='Email', null=True, blank=True)
+    mobile_number = models.CharField(max_length=32, blank=True)
+    email = models.EmailField(help_text='Email', null=True)
     address = models.OneToOneField(Address, on_delete=models.SET_NULL, help_text='Address', null=True)
 
     occupation = models.CharField(max_length=64, help_text='Occupation')
@@ -233,16 +262,23 @@ class AdoptionRequest(models.Model):
     MARRIAGE_STATUS = (
         ('m', 'Married'),
         ('u', 'Un-married'),
+        ('d', 'Divorced'),
     )
 
     married = models.CharField(
         max_length=1,
+        default='m',
         choices=MARRIAGE_STATUS,
         help_text='Marriage Status'
     )
 
     family_members = models.IntegerField('Total number of family members')
 
-    requested_for = models.OneToOneField(Orphan, on_delete=models.CASCADE)
-    requested_to = models.ForeignKey('Orphanage', on_delete=models.CASCADE)
+    requested_for = models.ForeignKey(Orphan, on_delete=models.CASCADE)
+
+    CHOICE = (
+        (True, 'Approved'),
+        (False, 'Declined')
+    )
+    approved = models.BooleanField(default=False, choices=CHOICE)
 

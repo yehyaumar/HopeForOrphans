@@ -39,8 +39,8 @@ class DonorAdmin(admin.ModelAdmin):
 
 @admin.register(AdoptionRequest)
 class AdoptionRequestAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'date', 'email', 'phone_number',
-                    'married', 'family_members', 'requested_for', 'requested_to')
+    list_display = ('first_name', 'last_name', 'request_id', 'request_date', 'email', 'phone_number', 'mobile_number',
+                    'married', 'family_members', 'requested_for', 'approved')
 
 
 @admin.register(Address)

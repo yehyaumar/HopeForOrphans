@@ -9,6 +9,9 @@
         {% endif %}
 
     </div>
+
+
+
     <div class="content-central">
         {% if orphans %}
             <div class="list-labels orphans-list-label">
@@ -58,7 +61,7 @@
                                 {% else %}
                                     <a class="red-buttons" href="">Sponsor</a>
                                     {% if o.status == 'a' %}
-                                        <a class="red-buttons" href="">Adoption Request</a>
+                                        <span class="red-buttons adopt-request">Adoption Request</span>
                                     {% endif %}
                                 {% endif %}
 
@@ -71,4 +74,10 @@
             <p style="text-align: center">No orphans added yet</p>
         {% endif %}
     </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+        </div>
+    </div>
+
 {% endblock %}

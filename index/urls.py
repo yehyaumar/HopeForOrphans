@@ -8,5 +8,6 @@ urlpatterns = [
     path('orphans', views.orphans_list, name='orphans'),
     path('orphanage/<int:pk>',views.orphanage_view, name='orphanage_view'),
     path('orphanage/<int:pk>/orphans', views.orphanages_orphan_list, name='orphanages_orphan_list'),
+    path('ajax/adopt_request', views.adoptionrequest, name='adopt-request')
 
 ]

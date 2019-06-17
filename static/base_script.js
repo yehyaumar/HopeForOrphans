@@ -147,7 +147,71 @@ jQuery(document).ready(function ($) {
         var pk = target.parent().parent().find('span').first().text();
 
         window.location = "/home/edit-orphan/" + pk;
-    })
+    });
 
+    //Modal
+        var modal = $('#myModal');
 
+    // var modal = document.getElementById('myModal');
+    let pk;
+    $('.adopt-request').click(function () {
+
+        $.ajax({
+            url: '/ajax/adopt_request',
+            type: 'get',
+            beforeSend: function () {
+                modal.css('display', 'block');
+
+            },
+
+            success: function (data) {
+                $('#myModal .modal-content').html(data.html_form);
+            }
+        });
+        var target = $(event.target);
+        pk = target.parent().parent().find('span').first().text();
+        // $('#pk').text(pk);
+        console.log(pk);
+        // console.log($('#pk').text())
+    });
+
+    modal.on('click', '.close',function () {
+        modal.css('display', 'none');
+    });
+
+    modal.on('click', '.close-button',function () {
+        modal.css('display', 'none');
+    });
+
+    modal.on('submit', '.adopt-request-form', function () {
+        var form = $(this);
+        data = form.serialize();
+        console.log(pk);
+        data = data+'&pk='+pk;
+        set_csrftoken();
+        $.ajax({
+            url: '/ajax/adopt_request',
+            data: data,
+            type: form.attr('method'),
+            dataType: 'json',
+            success: function (data) {
+                if (data.form_is_valid){
+                    console.log('Success');
+                    $('#myModal .modal-content').fadeOut(30, function () {
+                        $('#myModal .modal-content').html(data.success_page).fadeIn();
+                    });
+                }else {
+                    $('#myModal .modal-content').html(data.html_form);
+                }
+            }
+        });
+        return false;
+    });
+
+    $(window).click(function (event) {
+        if ($(event.target).attr('id') === modal.attr('id')) {
+            modal.css('display', 'none');
+
+        }
+    });
 });

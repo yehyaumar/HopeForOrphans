@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms import CheckboxSelectMultiple, SelectDateWidget
 
-from home.models import Orphanage, Contact, Address, BankDetail, Orphan
+from home.models import Orphanage, Contact, Address, BankDetail, Orphan, AdoptionRequest
 
 
 class OrphanageSignUpForm(forms.ModelForm):
@@ -81,3 +81,22 @@ class MyAuthForm(AuthenticationForm):
             attrs={'placeholder': 'Email'})
         self.fields['password'].widget = forms.PasswordInput(
             attrs={'placeholder':'Password'})
+
+
+class AdoptionRequestForm(forms.ModelForm):
+    class Meta:
+        model = AdoptionRequest
+        fields = ('first_name', 'last_name', 'dob', 'phone_number', 'email',
+                  'occupation', 'income', 'married', 'family_members', 'mobile_number')
+        widgets = {
+            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': 'Phone Number'}),
+            'mobile_number': forms.TextInput(attrs={'placeholder': 'Mobile Number'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Email'}),
+            'dob': forms.SelectDateWidget(years=range(1990, 2019), attrs={'class': 'date-time'}),
+            'occupation': forms.TextInput(attrs={'placeholder': 'Occupation'}),
+            'income': forms.NumberInput(attrs={'placeholder': 'Annual Income'}),
+            'family_members': forms.NumberInput(attrs={'placeholder': 'Family Members'}),
+
+        }

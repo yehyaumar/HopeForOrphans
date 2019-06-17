@@ -1,0 +1,78 @@
+{#<div class="modal-content">#}
+<div class="modal-header">
+    <span>Adoption Request Form</span>
+    <span class="close">&times;</span>
+</div>
+
+<form class="adopt-request-form" method="post" action="{% url 'adopt-request' %}">
+    <div class="modal-body">
+        {% csrf_token %}
+        {% if form.errors %}
+            <p class="form-error">{{ form.errors }}</p>
+        {% endif %}
+
+        <span id="pk" style="display: none"></span>
+        <table>
+            <tr>
+                <td colspan="2" class="col-label">Name</td>
+            </tr>
+            <tr>
+                <td>{{ form.first_name }}</td>
+                <td>{{ form.last_name }}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="col-label">Contact</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ form.email }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.phone_number }}</td>
+                <td>{{ form.mobile_number }}</td>
+
+            </tr>
+
+            <tr>
+                <td colspan="2" class="col-label">Address</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ address_from.locality }}</td>
+            </tr>
+            <tr>
+                <td>{{ address_from.zip_pin_code }}</td>
+                <td>{{ address_from.city }}</td>
+            </tr>
+
+            <tr>
+                <td>{{ address_from.state }}</td>
+                <td>{{ address_from.country }}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="col-label">Personal Details</td>
+            </tr>
+
+
+            <tr>
+                <td colspan="2">{{ form.occupation }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.family_members }}</td>
+                <td>{{ form.income }}</td>
+            </tr>
+            <tr>
+                <td class="col-label">Marriage Status</td>
+                <td class="col-label">Date of Birth (for age purpose)</td>
+            </tr>
+            <tr>
+                <td>{{ form.married }}</td>
+                <td>
+                    <div class="date-time-div">{{ form.dob }}</div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" value="Submit">
+    </div>
+</form>
