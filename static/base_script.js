@@ -170,9 +170,6 @@ jQuery(document).ready(function ($) {
         });
         var target = $(event.target);
         pk = target.parent().parent().find('span').first().text();
-        // $('#pk').text(pk);
-        console.log(pk);
-        // console.log($('#pk').text())
     });
 
     modal.on('click', '.close',function () {
@@ -214,4 +211,49 @@ jQuery(document).ready(function ($) {
 
         }
     });
+
+    let request_id;
+    $('.card-table-row').click(function () {
+        var target = $(event.target);
+
+        request_id = target.parent().children().eq(1).text().trim();
+
+        console.log(request_id);
+        if (request_id) {
+            $.ajax({
+                url: 'ajax/adoption_approval',
+                data: {'request_id': request_id},
+                type: 'get',
+                beforeSend: function () {
+                    modal.css('display', 'block');
+                },
+
+                success: function (data) {
+                    $('#myModal .modal-content').html(data.html_form);
+                }
+            });
+        }
+    });
+
+
+    modal.on('submit', '.adoption-request-details', function () {
+        var form = $(this);
+        data = form.serialize();
+        data = data+'&request_id='+request_id;
+        set_csrftoken();
+        $.ajax({
+            url: 'ajax/adoption_approval',
+            data: data,
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.form_is_valid){
+                    $('#myModal .modal-content').fadeOut(30);
+                    location.reload();
+                }
+            }
+        });
+        return false;
+    });
+
 });

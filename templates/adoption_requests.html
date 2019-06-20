@@ -1,0 +1,57 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}Adoption Requests | Hope For Orphans{% endblock %}
+
+
+{% block content %}
+    <div class="sub-title">
+        List of all Adoption Requests
+        {#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
+
+    </div>
+    <div class="content-central">
+        {% if adopt_requests %}
+
+            <table class="card-table">
+                <tr>
+                    <th class="card-table-header">Name</th>
+                    <th>Request ID</th>
+                    <th>Reuest Date</th>
+                    <th>Requested For</th>
+                    <th>Request Status</th>
+                </tr>
+                {% for req in adopt_requests %}
+
+                    <tr class="card-table-row">
+
+                        <td class="card-cells">
+                            {{ req.first_name }} {{ req.last_name }}
+                        </td>
+                        <td class="card-cells" id="adopt-req-id">
+                            {{ req.request_id }}
+                        </td>
+                        <td class="card-cells">
+                            {{ req.request_date }}
+                        </td>
+                        <td class="card-cells">
+                            <a href="{% url 'orphan-detail' req.requested_for.pk %}">{{ req.requested_for.first_name }} {{ req.requested_for.last_name }}</a>
+                        </td>
+                        <td class="card-cells ">
+                            <span class="status-span status-span-label {% if req.approved == True %}status-span-green
+                            {% elif req.approved == False %}status-span-black{% endif %}">{{ req.get_approved_display }}
+                            </span>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+
+        {% else %}
+            <p style="text-align: center">No orphanages added yet</p>
+        {% endif %}
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+        </div>
+    </div>
+{% endblock %}

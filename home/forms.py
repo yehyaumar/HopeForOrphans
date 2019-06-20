@@ -100,3 +100,12 @@ class AdoptionRequestForm(forms.ModelForm):
             'family_members': forms.NumberInput(attrs={'placeholder': 'Family Members'}),
 
         }
+
+class AdoptionApprovalForm(forms.ModelForm):
+    class Meta:
+        model = AdoptionRequest
+        fields = ('approved',)
+
+        widgets = {
+            'approved': forms.Select(),
+        }

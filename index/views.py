@@ -4,8 +4,8 @@ from django.shortcuts import render
 # Create your views here.
 from django.template.loader import render_to_string
 
-from home.forms import AdoptionRequestForm, AddressForm
-from home.models import Orphanage, Orphan
+from home.forms import AdoptionRequestForm, AddressForm, AdoptionApprovalForm
+from home.models import Orphanage, Orphan, AdoptionRequest
 
 
 def index(request):
@@ -46,7 +46,7 @@ def orphanages_orphan_list(request, pk):
     })
 
 
-def adoptionrequest(request):
+def adoption_request(request):
     data = dict()
 
     if request.method == 'POST':
@@ -82,3 +82,5 @@ def adoptionrequest(request):
                                          )
 
     return JsonResponse(data)
+
+

@@ -649,6 +649,10 @@ table td {
     padding: 4px;
     border-radius: 2px;
 }
+.status-span-label{
+    float: left;
+
+}
 
 .status-span-green {
     background-color: #81ba6a;
@@ -855,4 +859,69 @@ table td {
 
 .adopt-request-form{
 display: block
+}
+
+/*Adoption Requests*/
+
+.card-table{
+    border-spacing: 0;
+    overflow: auto;
+}
+.card-table th{
+    background-color: #EC7E71;
+    color: white;
+    text-align: left;
+    padding: 8px 6px;
+
+
+}
+.card-table-row{
+    cursor: pointer;
+
+}
+.card-table-row:hover{
+    background-color: #f8f8f8;
+}
+
+.card-cells{
+    padding: 8px 6px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.request-label{
+    display: inline-block;
+    background-color: #393939;
+}
+
+.adoption-request-details table{
+    background-color: #F9F9F9;
+    border: 1px solid #EAF1E7;
+    padding: 25px;
+    text-align: left;
+}
+
+.adoption-request-details th{
+    padding: 0;
+}
+
+.adoption-request-details tr{
+
+}
+
+.adoption-request-details td{
+    font-size: 18px;
+    color: #5f8a4f;
+    padding: 8px 0;
+}
+
+.form-headings{
+    text-align: center;
+    margin: 0;
+}
+
+#id_approved{
+    text-align: center;
+    color: white;
+    width: 12em;
+    background-color: #EC7E71;
 }

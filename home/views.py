@@ -5,8 +5,10 @@ from datetime import date, datetime
 
 
 # Create your views here.
-from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm, OrphanForm
-from home.models import Address, Orphanage, Contact, BankDetail, IncomeSource, Facilities, Orphan
+from django.template.loader import render_to_string
+
+from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm, OrphanForm, AdoptionApprovalForm
+from home.models import Address, Orphanage, Contact, BankDetail, IncomeSource, Facilities, Orphan, AdoptionRequest
 from users.forms import CustomUserCreationForm
 
 
@@ -238,4 +240,53 @@ def add_facility(request):
         data['success'] = True
     else:
         data['success'] = False
+    return JsonResponse(data)
+
+
+@login_required
+def adoption_requests(requests):
+    user = requests.user
+    orphanage = Orphanage.objects.get(user=user)
+    orphans = orphanage.orphan_set.all()
+
+    adopt_requests = AdoptionRequest.objects.none()
+    for orphan in orphans:
+        adopt_requests |= orphan.adoptionrequest_set.all()
+
+    return render(requests, 'adoption_requests.html', {
+        'adopt_requests': adopt_requests
+    })
+
+@login_required
+def adoption_approval(request):
+    data = dict()
+    context = dict()
+    method = request.method
+    request_id = None
+
+    if method == 'GET':
+        request_id = request.GET.get('request_id')
+    elif method == 'POST':
+        request_id = request.POST.get('request_id')
+
+    if request_id:
+        adoption_request = AdoptionRequest.objects.get(request_id=request_id)
+        adoption_approval_form = AdoptionApprovalForm(request.POST or None, instance=adoption_request)
+        if method == 'POST':
+            if adoption_approval_form.is_valid():
+                adoption_approval_form.save()
+                data['form_is_valid'] = True
+
+            else:
+                data['form_is_valid'] = False
+
+        context = {
+            'adopt_request': adoption_request,
+            'adoption_approval_form': adoption_approval_form
+        }
+    else:
+        data['form_is_valid'] = False
+
+    data['html_form'] = render_to_string(template_name='partial_adoption_approval.html', context=context, request=request)
+
     return JsonResponse(data)

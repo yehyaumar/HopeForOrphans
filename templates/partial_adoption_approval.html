@@ -1,0 +1,125 @@
+<div class="modal-header">
+    <span>Adoption Request</span>
+    <span class="close">&times;</span>
+</div>
+
+<form class="adoption-request-details" method="post">
+    <div class="modal-body">
+        {% csrf_token %}
+        {% if form.errors %}
+            <p class="form-error">{{ form.errors }}</p>
+        {% endif %}
+
+
+        <table>
+            <tr>
+                <td colspan="2">
+                    <div class="form-headings">Request Details</div>
+                </td>
+            </tr>
+            <tr>
+                <th class="col-label">First Name</th>
+                <th class="col-label">Last Name</th>
+            </tr>
+            <tr>
+                <td>{{ adopt_request.first_name }}</td>
+                <td>{{ adopt_request.last_name }}</td>
+            </tr>
+            <tr>
+                <th class="col-label">Request Date</th>
+                <th class="col-label">Request ID</th>
+            </tr>
+            <tr>
+                <td>{{ adopt_request.request_date }}</td>
+                <td>{{ adopt_request.request_id }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-headings">Contact</div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class="col-label">Phone Number</th>
+                <th class="col-label">Mobile Number</th>
+            </tr>
+            <tr>
+                <td>{{ adopt_request.phone_number }}</td>
+                <td>{{ adopt_request.mobile_number }}</td>
+            </tr>
+            <tr>
+                <th class="col-label">Email</th>
+            </tr>
+            <tr>
+                <td>{{ adopt_request.email }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-headings">Address</div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class="col-label">Locality</th>
+                <th class="col-label">Pincode</th>
+            </tr>
+            <tr>
+                <td>{{ adopt_request.address.locality }}</td>
+                <td>{{ adopt_request.address.zip_pin_code }}</td>
+            </tr>
+            <tr>
+                <th class="col-label">City</th>
+                <th class="col-label">State</th>
+            </tr>
+            <tr>
+                <td>{{ adopt_request.address.city }}</td>
+                <td>{{ adopt_request.address.state }}</td>
+            </tr>
+            <tr>
+                <th class="col-label">Country</th>
+            </tr>
+            <tr>
+                <td>{{ adopt_request.address.country }}</td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <div class="form-headings">Personal Details</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th class="col-label">Occupation</th>
+                <th class="col-label">Income</th>
+            </tr>
+
+            <tr>
+                <td>{{ adopt_request.occupation }}</td>
+                <td>{{ adopt_request.income }}</td>
+            </tr>
+            <tr>
+                <th class="col-label">No. of Family Members</th>
+                <th class="col-label">Marriage Status</th>
+            </tr>
+            <tr>
+                <td>{{ adopt_request.family_members }}</td>
+                <td>{{ adopt_request.get_married_display }}</td>
+            </tr>
+            <tr>
+                <th class="col-label">Date of Birth (for age purpose)</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="date-time-div">{{ adopt_request.dob }}</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center">{{ adoption_approval_form.approved }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" value="Done">
+    </div>
+</form>
