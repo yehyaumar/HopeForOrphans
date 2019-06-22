@@ -649,7 +649,8 @@ table td {
     padding: 4px;
     border-radius: 2px;
 }
-.status-span-label{
+
+.status-span-label {
     float: left;
 
 }
@@ -794,13 +795,25 @@ table td {
 }
 
 @-webkit-keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
 
 @keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
 
 /*Modal Header*/
@@ -808,7 +821,7 @@ table td {
     text-align: center;
     background-color: #EC7E71;
     color: white;
-        padding: 8px 10px;
+    padding: 8px 10px;
 
 }
 
@@ -816,6 +829,7 @@ table td {
 .modal-body {
     padding: 16px 28px 4px;
 }
+
 /* Modal Footer */
 .modal-footer {
     padding-top: 6px;
@@ -826,7 +840,7 @@ table td {
 }
 
 /*Close Button*/
-.close{
+.close {
     color: white;
     float: right;
     font-size: 18px;
@@ -834,13 +848,13 @@ table td {
 }
 
 .close:hover,
-.close:focus{
+.close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
 }
 
-.close-button{
+.close-button {
     border: none;
     font-size: 16px;
     border-radius: 4px;
@@ -848,26 +862,28 @@ table td {
     padding: 4px 8px;
     background-color: #E86252;
 }
+
 .close-button:hover,
-.close-button:focus{
+.close-button:focus {
     background-color: #EC7E71;
 }
 
-.adopt-request{
+.adopt-request {
     cursor: pointer;
 }
 
-.adopt-request-form{
-display: block
+.adopt-request-form {
+    display: block
 }
 
 /*Adoption Requests*/
 
-.card-table{
+.card-table {
     border-spacing: 0;
     overflow: auto;
 }
-.card-table th{
+
+.card-table th {
     background-color: #EC7E71;
     color: white;
     text-align: left;
@@ -875,53 +891,98 @@ display: block
 
 
 }
-.card-table-row{
+
+.card-table-row {
     cursor: pointer;
 
 }
-.card-table-row:hover{
+
+.card-table-row:hover {
     background-color: #f8f8f8;
 }
 
-.card-cells{
+.card-cells {
     padding: 8px 6px;
     border-bottom: 1px solid #eaeaea;
 }
 
-.request-label{
+.request-label {
     display: inline-block;
     background-color: #393939;
 }
 
-.adoption-request-details table{
+.adoption-request-details table {
     background-color: #F9F9F9;
     border: 1px solid #EAF1E7;
     padding: 25px;
     text-align: left;
 }
 
-.adoption-request-details th{
+.adoption-request-details th {
     padding: 0;
 }
 
-.adoption-request-details tr{
+.adoption-request-details tr {
 
 }
 
-.adoption-request-details td{
+.adoption-request-details td {
     font-size: 18px;
     color: #5f8a4f;
     padding: 8px 0;
 }
 
-.form-headings{
+.form-headings {
     text-align: center;
     margin: 0;
 }
 
-#id_approved{
+#id_approved {
     text-align: center;
     color: white;
     width: 12em;
     background-color: #EC7E71;
+}
+
+/*pagination*/
+/*.pagination-div{*/
+/*    text-align: center;*/
+/*    */
+/*}*/
+.pagination {
+    list-style-type: none;
+
+    margin: 2em 25%;
+    padding: 0;
+    overflow: hidden;
+}
+
+.pagination li {
+    border: 1px solid #E86252;
+    float: left;
+}
+
+.pagination li a {
+    display: block;
+    color: #E86252;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.pagination li a:hover {
+    color: white;
+    background-color: #E86252;
+}
+
+.pagination-active {
+    display: block;
+    background-color: #E86252;
+    color: white;
+    text-align: center;
+    padding: 16px;
+}
+
+.pagination-disabled {
+    display: none;
 }

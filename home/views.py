@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from datetime import date, datetime
@@ -162,6 +163,7 @@ def edit_orphan(request, pk):
     else:
         return HttpResponse(status=403)
 
+
 @login_required
 def delete_orphan(request):
     if request.POST:
@@ -191,12 +193,22 @@ def my_orphans(request):
     orphanage = Orphanage.objects.get(user=user)
     orphans = orphanage.orphan_set.all()
 
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(orphans, 10)
+    try:
+        orphans = paginator.page(page)
+    except PageNotAnInteger:
+        orphans = paginator.page(1)
+    except EmptyPage:
+        orphans = paginator.page(paginator.num_pages)
+
     return render(request, 'my_orphans_list.html',{
         'orphanage':orphanage,
         'orphans': orphans
     })
 
-
+# bug
 def orphan_detail(request, pk):
     user = request.user
     orphanage = Orphanage.objects.get(user=user)
@@ -208,6 +220,7 @@ def orphan_detail(request, pk):
     })
 
 
+@login_required
 def add_income_src(request):
     income_src = request.POST.get('value', None)
     print(income_src)
@@ -227,6 +240,7 @@ def add_income_src(request):
     return JsonResponse(data)
 
 
+@login_required
 def add_facility(request):
     facility = request.POST.get('value', None)
     # orphanage = Orphanage.objects.get(user=request.user)
@@ -244,18 +258,30 @@ def add_facility(request):
 
 
 @login_required
-def adoption_requests(requests):
-    user = requests.user
+def adoption_requests(request):
+    user = request.user
     orphanage = Orphanage.objects.get(user=user)
     orphans = orphanage.orphan_set.all()
 
     adopt_requests = AdoptionRequest.objects.none()
+
     for orphan in orphans:
         adopt_requests |= orphan.adoptionrequest_set.all()
 
-    return render(requests, 'adoption_requests.html', {
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(adopt_requests, 10)
+    try:
+        adopt_requests = paginator.page(page)
+    except PageNotAnInteger:
+        adopt_requests = paginator.page(1)
+    except EmptyPage:
+        adopt_requests = paginator.page(paginator.num_pages)
+
+    return render(request, 'adoption_requests.html', {
         'adopt_requests': adopt_requests
     })
+
 
 @login_required
 def adoption_approval(request):

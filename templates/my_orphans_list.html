@@ -75,6 +75,31 @@
         {% endif %}
     </div>
 
+    {% if orphans.has_other_pages %}
+        <ul class="pagination">
+            {% if orphans.has_previous %}
+                <li><a href="?page={{ orphans.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="pagination-disabled"><span>&laquo;</span></li>
+            {% endif %}
+
+            {% for i in orphans.paginator.page_range %}
+                {% if orphans.number == i %}
+                    <li><span class="pagination-active">{{ i }}</span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if orphans.has_next %}
+                <li><a href="?page={{ orphans.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="pagination-disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+
+
     <div id="myModal" class="modal">
         <div class="modal-content">
         </div>

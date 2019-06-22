@@ -50,6 +50,32 @@
             <p style="text-align: center">No orphanages added yet</p>
         {% endif %}
     </div>
+
+    {% if adopt_requests.has_other_pages %}
+        <ul class="pagination">
+            {% if adopt_requests.has_previous %}
+                <li><a href="?page={{ adopt_requests.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="pagination-disabled"><span>&laquo;</span></li>
+            {% endif %}
+
+            {% for i in adopt_requests.paginator.page_range %}
+                {% if adopt_requests.number == i %}
+                    <li><span class="pagination-active">{{ i }}</span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if adopt_requests.has_next %}
+                <li><a href="?page={{ adopt_requests.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="pagination-disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+
+
     <div id="myModal" class="modal">
         <div class="modal-content">
         </div>

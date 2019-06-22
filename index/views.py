@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -14,6 +15,15 @@ def index(request):
 
 def orphanages_list(request):
     orphanages = Orphanage.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(orphanages, 10)
+    try:
+        orphanages = paginator.page(page)
+    except PageNotAnInteger:
+        orphanages = paginator.page(1)
+    except EmptyPage:
+        orphanages = paginator.page(paginator.num_pages)
 
     return render(request, 'orphanages_list.html', {
         'orphanages': orphanages
@@ -22,6 +32,15 @@ def orphanages_list(request):
 
 def orphans_list(request):
     orphans = Orphan.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(orphans, 10)
+    try:
+        orphans = paginator.page(page)
+    except PageNotAnInteger:
+        orphans = paginator.page(1)
+    except EmptyPage:
+        orphans = paginator.page(paginator.num_pages)
 
     return render(request, 'orphans_list.html', {
         'orphans': orphans
@@ -39,6 +58,16 @@ def orphanage_view(request, pk):
 def orphanages_orphan_list(request, pk):
     orphanage = Orphanage.objects.get(pk=pk)
     orphans = orphanage.orphan_set.all()
+
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(orphans, 10)
+    try:
+        orphans = paginator.page(page)
+    except PageNotAnInteger:
+        orphans = paginator.page(1)
+    except EmptyPage:
+        orphans = paginator.page(paginator.num_pages)
 
     return render(request, 'my_orphans_list.html', {
         'orphanage': orphanage,

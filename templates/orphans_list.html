@@ -4,7 +4,7 @@
 
     <div class="sub-title">
         List of orphans from all Orphanages
-{#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
+        {#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
 
     </div>
     <div class="content-central">
@@ -21,7 +21,8 @@
                         {#                    </div>#}
                         <div class="name-div">
                             <a class="card-orphan-link">{{ o.first_name }} {{ o.last_name }}</a>
-                            <a class="card-orphanage-link" href="{% url 'orphanage_view' o.orphanage.pk %}">{{ o.orphanage.name }}</a>
+                            <a class="card-orphanage-link"
+                               href="{% url 'orphanage_view' o.orphanage.pk %}">{{ o.orphanage.name }}</a>
                         </div>
                         <span class="status-span {% if o.status == 'a' %}status-span-green
                                 {% elif o.status == 'n' %}status-span-blue{% else %}status-span-black{% endif %}">
@@ -45,15 +46,15 @@
                             <div class="card-buttons">
                                 {#                                <a class="link-buttons" href="">Sponsor</a>#}
                                 {#                                <a class="link-buttons" href="">Adoption Request</a>#}
-{#                                {% if user.is_authenticated %}#}
-{#                                    <input class="red-buttons edit-buttons" id="" type="button" value="Edit">#}
-{#                                    <input class="red-buttons delete-buttons" id="" type="button" value="Delete">#}
-{#                                {% else %}#}
-                                    <a class="red-buttons" href="">Sponsor</a>
-                                    {% if o.status == 'a' %}
-                                        <span class="red-buttons adopt-request">Adoption Request</span>
-                                    {% endif %}
-{#                                {% endif %}#}
+                                {#                                {% if user.is_authenticated %}#}
+                                {#                                    <input class="red-buttons edit-buttons" id="" type="button" value="Edit">#}
+                                {#                                    <input class="red-buttons delete-buttons" id="" type="button" value="Delete">#}
+                                {#                                {% else %}#}
+                                <a class="red-buttons" href="">Sponsor</a>
+                                {% if o.status == 'a' %}
+                                    <span class="red-buttons adopt-request">Adoption Request</span>
+                                {% endif %}
+                                {#                                {% endif %}#}
 
                             </div>
                         </div>
@@ -64,7 +65,33 @@
             <p style="text-align: center">No orphans added yet</p>
         {% endif %}
     </div>
-    S
+
+    {% if orphans.has_other_pages %}
+{#        <div class="pagination-div">#}
+            <ul class="pagination">
+                {% if orphans.has_previous %}
+                    <li><a href="?page={{ orphans.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="pagination-disabled"><span>&laquo;</span></li>
+                {% endif %}
+
+                {% for i in orphans.paginator.page_range %}
+                    {% if orphans.number == i %}
+                        <li><span class="pagination-active">{{ i }}</span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if orphans.has_next %}
+                    <li><a href="?page={{ orphans.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="pagination-disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+{#        </div>#}
+    {% endif %}
+
     <div id="myModal" class="modal">
         <div class="modal-content">
         </div>
