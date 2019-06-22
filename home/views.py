@@ -62,9 +62,7 @@ def signup(request):
 def orphanage_profile(request):
     user = request.user
 
-    orphanage = Orphanage.objects.get(user=user)
-
-    print(orphanage)
+    orphanage = get_object_or_404(Orphanage, user=user)
 
     return render(request, 'orphanage_profile.html', {'orphanage': orphanage})
 
@@ -72,9 +70,8 @@ def orphanage_profile(request):
 @login_required
 def edit_profile(request):
     user = request.user
-    orphanage = Orphanage.objects.get(user=user)
+    orphanage = get_object_or_404(Orphanage, user=user)
 
-    # user_form = CustomUserCreationForm(data=request.POST or None, instance=user)
     profile_form = OrphanageSignUpForm(data=request.POST or None, instance=orphanage)
     address_form = AddressForm(data=request.POST or None, instance=orphanage.address)
     contact_form = ContactForm(data=request.POST or None, instance=orphanage.contact)
@@ -116,7 +113,7 @@ def edit_profile(request):
 @login_required
 def add_orphan(request):
     user = request.user
-    orphanage = Orphanage.objects.get(user=user)
+    orphanage = get_object_or_404(Orphanage, user=user)
 
     orphan_form = OrphanForm(data=request.POST)
     if request.method == 'POST':
@@ -138,15 +135,12 @@ def add_orphan(request):
 @login_required
 def edit_orphan(request, pk):
     user = request.user
-    orphanage = Orphanage.objects.get(user=user)
+    orphanage = get_object_or_404(Orphanage, user=user)
     # check if the orphan belong to this user
 
-    orphan = Orphan.objects.get(pk=pk)
+    orphan = get_object_or_404(Orphan, pk=pk)
 
     if orphan in orphanage.orphan_set.all():
-
-        print(orphan)
-
         orphan_form = OrphanForm(data=request.POST or None, instance=orphan)
 
         if request.method == 'POST':
@@ -166,12 +160,19 @@ def edit_orphan(request, pk):
 
 @login_required
 def delete_orphan(request):
+    user = request.user
+    orphanage = get_object_or_404(Orphanage, user=user)
+
     if request.POST:
         pk = request.POST['pk']
         result = False
 
         if pk:
-            orphan = get_object_or_404(Orphan, pk=pk)
+            try:
+                orphan = orphanage.orphan_set.get(pk=pk)
+            except Exception:
+                return HttpResponse(status=404)
+
             result = orphan.delete()
 
         data = {
@@ -190,7 +191,7 @@ def delete_orphan(request):
 def my_orphans(request):
     user = request.user
 
-    orphanage = Orphanage.objects.get(user=user)
+    orphanage = get_object_or_404(Orphanage, user=user)
     orphans = orphanage.orphan_set.all()
 
     page = request.GET.get('page', 1)
@@ -210,10 +211,8 @@ def my_orphans(request):
 
 # bug
 def orphan_detail(request, pk):
-    user = request.user
-    orphanage = Orphanage.objects.get(user=user)
-    orphan = orphanage.orphan_set.get(pk=pk)
-    total_days = date.today() - orphan.dob
+
+    orphan = get_object_or_404(Orphan, pk=pk)
 
     return render(request, 'orphan_profile.html', {
         'orphan': orphan,
@@ -260,7 +259,7 @@ def add_facility(request):
 @login_required
 def adoption_requests(request):
     user = request.user
-    orphanage = Orphanage.objects.get(user=user)
+    orphanage = get_object_or_404(Orphanage, user=user)
     orphans = orphanage.orphan_set.all()
 
     adopt_requests = AdoptionRequest.objects.none()

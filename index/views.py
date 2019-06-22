@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.template.loader import render_to_string
@@ -48,15 +48,13 @@ def orphans_list(request):
 
 
 def orphanage_view(request, pk):
-    orphanage = Orphanage.objects.get(pk=pk)
-
-    print(orphanage)
+    orphanage = get_object_or_404(Orphanage, pk=pk)
 
     return render(request, 'orphanage_profile.html', {'orphanage': orphanage})
 
 
 def orphanages_orphan_list(request, pk):
-    orphanage = Orphanage.objects.get(pk=pk)
+    orphanage = get_object_or_404(Orphanage, pk=pk)
     orphans = orphanage.orphan_set.all()
 
     page = request.GET.get('page', 1)
