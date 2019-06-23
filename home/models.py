@@ -232,7 +232,7 @@ def generate_urid():
     request_id_year = int(request_id[4:8])
 
     print(request_id_day, request_id_month, request_id_year)
-    if day != request_id_day and month != request_id_month and year != request_id_year:
+    if day != request_id_day:
         request_id_number = 0
 
     new_request_id_number = request_id_number + 1

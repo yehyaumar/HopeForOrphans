@@ -196,6 +196,8 @@ jQuery(document).ready(function ($) {
                     console.log('Success');
                     $('#myModal .modal-content').fadeOut(30, function () {
                         $('#myModal .modal-content').html(data.success_page).fadeIn();
+                        $('.request-id').text(data.req_id)
+
                     });
                 }else {
                     $('#myModal .modal-content').html(data.html_form);

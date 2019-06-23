@@ -80,9 +80,9 @@ def adoption_request(request):
         adopt_req_form = AdoptionRequestForm(request.POST)
         address_form = AddressForm(request.POST)
 
-        if address_form.is_valid() and address_form.is_valid():
+        if adopt_req_form.is_valid() and address_form.is_valid():
             pk = request.POST.get('pk')
-            orphan = Orphan.objects.get(pk=pk)
+            orphan = get_object_or_404(Orphan, pk=pk)
 
             adoption_req = adopt_req_form.save(commit=False)
             address = address_form.save()
@@ -90,9 +90,10 @@ def adoption_request(request):
             adoption_req.requested_for = orphan
             adoption_req.save()
             data['form_is_valid'] = True
+            data['req_id'] = adoption_req.request_id
             data['success_page'] = render_to_string(template_name='partial_success_adopt_req.html')
-
         else:
+            print(adopt_req_form.errors, address_form.errors)
             data['form_is_valid'] = False
     else:
         adopt_req_form = AdoptionRequestForm()

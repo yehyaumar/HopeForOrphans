@@ -932,6 +932,10 @@ table td {
     padding: 8px 0;
 }
 
+.request-id{
+    font-weight: bold;
+}
+
 .form-headings {
     text-align: center;
     margin: 0;
