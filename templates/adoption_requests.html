@@ -37,8 +37,11 @@
                             <a href="{% url 'orphan-detail' req.requested_for.pk %}">{{ req.requested_for.first_name }} {{ req.requested_for.last_name }}</a>
                         </td>
                         <td class="card-cells ">
-                            <span class="status-span status-span-label {% if req.approved == True %}status-span-green
-                            {% elif req.approved == False %}status-span-black{% endif %}">{{ req.get_approved_display }}
+                            <span class="status-span status-span-label
+                            {% if req.approved == 'a' %}status-span-green
+                            {% elif req.approved == 'd' %}status-span-red
+                            {% elif req.approved == 'p' %}status-span-black
+                            {% endif %}">{{ req.get_approved_display }}
                             </span>
                         </td>
                     </tr>

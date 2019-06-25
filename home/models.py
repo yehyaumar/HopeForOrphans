@@ -116,7 +116,7 @@ class Address(models.Model):
     locality = models.CharField(max_length=64, help_text='Locality')
     city = models.CharField(max_length=64, help_text='City')
     state = models.CharField(max_length=64, help_text='State') #choices
-    zip_pin_code = models.IntegerField(help_text='Zip/Pin code')
+    zip_pin_code = models.CharField(max_length=12, help_text='Zip/Pin code')
     country = models.CharField(max_length=64, help_text='Country') #choices
 
     def __str__(self):
@@ -200,7 +200,7 @@ class Donor(models.Model):
     first_name = models.CharField(max_length=64, help_text='First Name', blank=True)
     last_name = models.CharField(max_length=64, help_text='Last Name', blank=True)
 
-    date = models.DateField(auto_now_add=True, help_text='Donation date/time')
+    date = models.DateTimeField(auto_now_add=True, help_text='Donation date/time')
 
     phone_number = models.CharField(max_length=32, help_text='Phone number', null=True, blank=True)
     email = models.EmailField(help_text='Email', null=True, blank=True)
@@ -277,8 +277,12 @@ class AdoptionRequest(models.Model):
     requested_for = models.ForeignKey(Orphan, on_delete=models.CASCADE)
 
     CHOICE = (
-        (True, 'Approved'),
-        (False, 'Declined')
+        ('a', 'Approved'),
+        ('d', 'Declined'),
+        ('p', 'Pending'),
     )
-    approved = models.BooleanField(default=False, choices=CHOICE)
+    approved = models.CharField(max_length=1, default='p', choices=CHOICE)
+
+    class Meta:
+        ordering = ['first_name', 'last_name', 'request_id']
 

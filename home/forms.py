@@ -34,7 +34,7 @@ class AddressForm(forms.ModelForm):
             'locality': forms.TextInput(attrs={'placeholder': 'Locality'}),
             'city': forms.TextInput(attrs={'placeholder': 'City'}),
             'state': forms.TextInput(attrs={'placeholder': 'State'}),
-            'zip_pin_code': forms.NumberInput(attrs={'placeholder': 'Zip/Pin Code'}),
+            'zip_pin_code': forms.TextInput(attrs={'placeholder': 'Zip/Pin Code'}),
             'country': forms.TextInput(attrs={'placeholder': 'Country'}),
         }
 
@@ -100,6 +100,7 @@ class AdoptionRequestForm(forms.ModelForm):
             'family_members': forms.NumberInput(attrs={'placeholder': 'Family Members'}),
 
         }
+
 
 class AdoptionApprovalForm(forms.ModelForm):
     class Meta:

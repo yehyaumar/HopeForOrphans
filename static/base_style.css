@@ -662,6 +662,9 @@ table td {
 .status-span-blue {
     background-color: cornflowerblue;
 }
+.status-span-red{
+    background-color: #EC7E71;
+}
 
 .status-span-black {
     background-color: #393939;
