@@ -179,9 +179,6 @@ class Orphanage(models.Model):
 
     facilities = models.ManyToManyField(Facilities, help_text='Facilities Available', blank=True)
 
-    total_donation_raised = models.FloatField(help_text='Total donation raised through this website',
-                                              null=True, blank=True)
-
     display_pic = models.ImageField(upload_to='orphanage_dp/', help_text='Display picture for orphanage',
                                     null=True, blank=True)
 

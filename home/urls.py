@@ -15,6 +15,7 @@ urlpatterns = [
 
     path('edit-orphan/<int:pk>', views.edit_orphan, name='edit-orphan'),
     path('adoption-requests', views.adoption_requests, name='adoption-requests'),
+    path('donations', views.donations, name='donations'),
 
     path('ajax/adoption_approval', views.adoption_approval, name='adopt-approval')
 

@@ -32,7 +32,7 @@
 
             <div class="banner-content" id="top-nav-div">
                 {% if user.is_authenticated %}
-                    <a class="top-nav-links" href="{%  url 'my-orphans'%}">My Orphans</a><a class="top-nav-links" href="{{ url }}">Donations</a><a class="top-nav-links" href="{% url 'adoption-requests' %}">Adoption Requests</a><a class="top-nav-links" href="{%  url 'profile' %}">Profile</a><a class="top-nav-links" href="{% url 'logout' %}">Logout</a>
+                    <a class="top-nav-links" href="{%  url 'my-orphans'%}">My Orphans</a><a class="top-nav-links" href="{% url 'donations' %}">Donations</a><a class="top-nav-links" href="{% url 'adoption-requests' %}">Adoption Requests</a><a class="top-nav-links" href="{%  url 'profile' %}">Profile</a><a class="top-nav-links" href="{% url 'logout' %}">Logout</a>
                 {% else %}
                     <a class="top-nav-links" href="{% url 'orphans' %}">Orphans</a><a class="top-nav-links" href="{% url 'orphanages' %}">Orphanages</a><a class="top-nav-links" href="{% url 'login' %}">Login</a>
                 {% endif %}

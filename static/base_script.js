@@ -92,13 +92,13 @@ function run_ajax(e) {
         amount = $('input[name=amount]').val().trim();
         firstname = $('input[name=firstname]').val().trim();
         email = $('input[name=email]').val().trim();
-        productinfo = $('textarea[name=productinfo]').val().trim();
+        productinfo = $('input[name=productinfo]').val().trim();
         phone = $('input[name=phone]').val().trim();
         orphanage_pk = $('#orphanage_pk').text();
         $('input[name=udf1]').val(orphanage_pk);
         udf1 = $('input[name=udf1]').val();
+        udf2 = $('textarea[name=udf2]').val().trim();
 
-        console.log(orphanage_pk);
         set_csrftoken();
 
         data = {
@@ -108,6 +108,7 @@ function run_ajax(e) {
             'productinfo': productinfo,
             'phone': phone,
             'udf1': udf1,
+            'udf2': udf2,
         };
 
         $.ajax({

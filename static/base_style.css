@@ -430,6 +430,7 @@ table {
 }
 
 table td {
+    word-wrap: break-word
 }
 
 /*Profile*/
@@ -437,7 +438,10 @@ table td {
 
 .content-central {
     margin: 2em 25%;
+}
 
+.content-central-donation{
+    margin: 2em 25%;
 }
 
 .image-btn-table {
@@ -895,8 +899,6 @@ table td {
     color: white;
     text-align: left;
     padding: 8px 6px;
-
-
 }
 
 .card-table-row {
@@ -904,7 +906,7 @@ table td {
 
 }
 
-.card-table-row:hover {
+.card-table-row:hover, .card-table-row-donation:hover {
     background-color: #f8f8f8;
 }
 

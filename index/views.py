@@ -146,6 +146,7 @@ def donate(request, pk):
         productinfo = request.POST.get('productinfo')
         phone = request.POST.get('phone')
         udf1 = request.POST.get('udf1')
+        udf2 = request.POST.get('udf2')
 
         payment_data = {
             'txnid': txnid,
@@ -155,6 +156,7 @@ def donate(request, pk):
             'phone': phone,
             'productinfo': productinfo,
             'udf1': udf1,
+            'udf2': udf2
         }
 
         payu_data = payu.initiate_transaction(merchant_key=merchant_key, payu_salt= payu_salt,
@@ -171,7 +173,6 @@ def donate(request, pk):
 @csrf_exempt
 def success(request):
     payu_success_data = payu.check_hash(dict(request.POST))
-    print(payu_success_data)
     amount_donated = payu_success_data['data']['amount']
     pk = int(payu_success_data['data']['udf1'])
 
@@ -184,6 +185,7 @@ def success(request):
         donation.email = payu_success_data['data']['email']
         donation.payuMoneyId = payu_success_data['data']['payuMoneyId']
         donation.phone_number = payu_success_data['data']['phone']
+        donation.donation_remark = payu_success_data['data']['udf2']
 
         donation.save()
     except IntegrityError:

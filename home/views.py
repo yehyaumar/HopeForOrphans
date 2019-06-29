@@ -60,8 +60,17 @@ def orphanage_profile(request):
     user = request.user
 
     orphanage = get_object_or_404(Orphanage, user=user)
+    donation_list = orphanage.donor_set.all()
 
-    return render(request, 'orphanage_profile.html', {'orphanage': orphanage})
+    total_donation_raised = 0
+    for donor in donation_list:
+        total_donation_raised += donor.amount_donated
+
+    print(total_donation_raised)
+    return render(request, 'orphanage_profile.html', {
+        'orphanage': orphanage,
+        'total_donation_raised': total_donation_raised
+    })
 
 
 @login_required
@@ -312,3 +321,24 @@ def adoption_approval(request):
     data['html_form'] = render_to_string(template_name='partial_adoption_approval.html', context=context, request=request)
 
     return JsonResponse(data)
+
+
+@login_required
+def donations(request):
+    user = request.user
+    orphanage = get_object_or_404(Orphanage, user=user)
+    donors_list = orphanage.donor_set.all()
+
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(donors_list, 10)
+    try:
+        donors = paginator.page(page)
+    except PageNotAnInteger:
+        donors = paginator.page(1)
+    except EmptyPage:
+        donors = paginator.page(paginator.num_pages)
+
+    return render(request, 'donors_list.html', {
+        'donors': donors
+    })

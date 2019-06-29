@@ -1,0 +1,89 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}Donations | Hope For Orphans{% endblock %}
+
+{% block content %}
+    <div class="sub-title">
+        List of all Donations
+        {#        <a class="link-in-subtitle-bar" href="{% url 'add-orphan' %}">Add Orphan</a>#}
+
+    </div>
+    <div class="content-central-donation">
+        {% if donors %}
+
+            <table class="card-table">
+                <tr>
+                    <th class="card-table-header">Transaction ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Amount Donated</th>
+                    <th>Donation Date</th>
+                    <th>Remarks</th>
+                </tr>
+                {% for donor in donors %}
+
+                    <tr class="card-table-row-donation">
+                        <td class="card-cells" id="adopt-req-id">
+                            {{ donor.payuMoneyId }}
+                        </td>
+
+                        <td class="card-cells">
+                            {{ donor.first_name }} {{ donor.last_name }}
+                        </td>
+
+                        <td class="card-cells">
+                            {{ donor.email }}
+                        </td>
+                        <td class="card-cells">
+                            {{ donor.phone_number }}
+                        </td>
+                        <td class="card-cells ">
+                            {{ donor.amount_donated }}
+                        </td>
+                        <td class="card-cells ">
+                            {{ donor.date }}
+                        </td>
+                    <td class="card-cells ">
+                            {{ donor.donation_remark }}
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+
+        {% else %}
+            <p style="text-align: center">No orphanages added yet</p>
+        {% endif %}
+    </div>
+
+    {% if donors.has_other_pages %}
+        <ul class="pagination">
+            {% if donors.has_previous %}
+                <li><a href="?page={{ donors.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="pagination-disabled"><span>&laquo;</span></li>
+            {% endif %}
+
+            {% for i in donors.paginator.page_range %}
+                {% if donors.number == i %}
+                    <li><span class="pagination-active">{{ i }}</span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if donors.has_next %}
+                <li><a href="?page={{ donors.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="pagination-disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+        </div>
+    </div>
+{% endblock %}

@@ -27,7 +27,7 @@ class OrphanAdmin(admin.ModelAdmin):
 @admin.register(Orphanage)
 class OrphanageAdmin(admin.ModelAdmin):
     list_display = ('user', 'display_pic', 'name', 'address', 'contact', 'bank_details',
-                    'display_incomesrc', 'display_facilities', 'total_donation_raised')
+                    'display_incomesrc', 'display_facilities')
     inlines = [OrphanageImagesInline]
 
 
