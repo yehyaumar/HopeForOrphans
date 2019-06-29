@@ -22,7 +22,9 @@
                         <a class="link-buttons" href="{% url 'edit-profile' %}">Edit profile</a>
                     {% else %}
                         <a  class="link-buttons" href="{% url 'orphanages_orphan_list' orphanage.pk %}">View Orphans</a>
-                        <a class="link-buttons" href="{% url 'index' %}">Donate</a>
+                        {% if orphanage.bank_details.merchant_key and orphanage.bank_details.merchant_salt %}
+                            <a class="link-buttons" href="{% url 'donate' orphanage.pk %}">Donate</a>
+                        {% endif %}
                     {% endif %}
                 </td>
             </tr>

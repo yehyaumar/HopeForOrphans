@@ -87,7 +87,58 @@ function handler(container, txt_box, name, url) {
 
 }
 
+function run_ajax(e) {
+    // e.preventDefault()
+        amount = $('input[name=amount]').val().trim();
+        firstname = $('input[name=firstname]').val().trim();
+        email = $('input[name=email]').val().trim();
+        productinfo = $('textarea[name=productinfo]').val().trim();
+        phone = $('input[name=phone]').val().trim();
+        orphanage_pk = $('#orphanage_pk').text();
+        $('input[name=udf1]').val(orphanage_pk);
+        udf1 = $('input[name=udf1]').val();
+
+        console.log(orphanage_pk);
+        set_csrftoken();
+
+        data = {
+            'amount': amount,
+            'firstname': firstname,
+            'email': email,
+            'productinfo': productinfo,
+            'phone': phone,
+            'udf1': udf1,
+        };
+
+        $.ajax({
+            url: '/donate/'+orphanage_pk,
+            type: 'post',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                if (data){
+                    console.log(data);
+
+                    $('input[name=key]').val(data.merchant_key);
+                    $('input[name=hash]').val(data.hashh);
+
+                    $('input[name=hash_string]').val(data.hash_string);
+                    $('input[name=txnid]').val(data.txnid);
+
+                    $('input[name=surl]').val(data.surl);
+                    $('input[name=furl]').val(data.furl);
+                    $('input[name=service_provider]').val(data.service_provider);
+
+                    var payuForm = document.forms.payuForm;
+                    payuForm.action = data.action;
+                    payuForm.submit();
+                }
+            }
+        });
+    }
+
 jQuery(document).ready(function ($) {
+    $('form[name=payuForm]').submit(run_ajax)
     $(".accordian").on("click", ".card-div", function () {
         $(this).toggleClass("active").next().slideToggle();
     });
@@ -112,12 +163,6 @@ jQuery(document).ready(function ($) {
     var len = $('.orphans-pk').length;
     console.log(len);
 
-    // for(var i=0; i<len; i++) {
-    //     $('.edit-buttons:eq(i)').click(function () {
-    //         console.log('hello');
-    //
-    //     })
-    // }
 
     $('.delete-buttons').on("click", function (event) {
         var target = $(event.target);

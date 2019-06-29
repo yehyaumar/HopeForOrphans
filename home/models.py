@@ -162,7 +162,7 @@ class Orphanage(models.Model):
 
     date_estd = models.DateField(null=True, blank=True, help_text='Date of establishment')
 
-    brief_desc = models.TextField(max_length=512, help_text='Brief description of Orphanage', blank=True)
+    brief_desc = models.TextField(max_length=1024, help_text='Brief description of Orphanage', blank=True)
 
     address = models.OneToOneField(Address, on_delete=models.SET_NULL, null=True, help_text='Address')
     contact = models.OneToOneField(Contact, on_delete=models.SET_NULL, null=True, help_text='Contact')
@@ -206,6 +206,8 @@ class Donor(models.Model):
     email = models.EmailField(help_text='Email', null=True, blank=True)
 
     amount_donated = models.FloatField(help_text='Donation Amount')
+    payuMoneyId = models.CharField(unique=True, max_length=20, help_text='payu Money ID', null=True)
+    donation_remark = models.CharField(max_length=1024, help_text='Donation Remarks', null=True, blank=True)
 
     donated_to = models.ForeignKey('Orphanage', on_delete=models.CASCADE)
 

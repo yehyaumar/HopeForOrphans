@@ -39,7 +39,7 @@
                         <td class="card-cells ">
                             <span class="status-span status-span-label
                             {% if req.approved == 'a' %}status-span-green
-                            {% elif req.approved == 'd' %}status-span-red
+                            {% elif req.approved == 'd' %}status-span-blue
                             {% elif req.approved == 'p' %}status-span-black
                             {% endif %}">{{ req.get_approved_display }}
                             </span>

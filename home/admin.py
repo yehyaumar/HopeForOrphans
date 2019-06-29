@@ -33,7 +33,7 @@ class OrphanageAdmin(admin.ModelAdmin):
 
 @admin.register(Donor)
 class DonorAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'date', 'email', 'phone_number',
+    list_display = ('first_name', 'last_name', 'payuMoneyId','date', 'email', 'phone_number',
                     'amount_donated', 'donated_to')
 
 

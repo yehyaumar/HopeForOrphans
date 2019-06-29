@@ -2,14 +2,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from datetime import date, datetime
-
-
 # Create your views here.
 from django.template.loader import render_to_string
 
 from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm, OrphanForm, AdoptionApprovalForm
-from home.models import Address, Orphanage, Contact, BankDetail, IncomeSource, Facilities, Orphan, AdoptionRequest
+from home.models import Orphanage, IncomeSource, Facilities, Orphan, AdoptionRequest
 from users.forms import CustomUserCreationForm
 
 

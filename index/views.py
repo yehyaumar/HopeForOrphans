@@ -1,12 +1,19 @@
+from MySQLdb._exceptions import IntegrityError
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
+
+import hashlib
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
+
+from .payumoney import PAYU
+
 
 # Create your views here.
 from django.template.loader import render_to_string
 
-from home.forms import AdoptionRequestForm, AddressForm, AdoptionApprovalForm
-from home.models import Orphanage, Orphan, AdoptionRequest
+from home.forms import AdoptionRequestForm, AddressForm
+from home.models import Orphanage, Orphan,  Donor
 
 
 def index(request):
@@ -112,3 +119,91 @@ def adoption_request(request):
     return JsonResponse(data)
 
 
+payu = PAYU()
+
+
+def donate(request, pk):
+    orphanage = get_object_or_404(Orphanage, pk=pk)
+
+    if request.method == 'POST':
+        hash_object = hashlib.sha256(b'randint(0,20)')
+        txnid = hash_object.hexdigest()[0:20]
+
+        merchant_key = orphanage.bank_details.merchant_key.strip()
+        payu_key = orphanage.bank_details.merchant_key.strip()
+        payu_salt = orphanage.bank_details.merchant_salt.strip()
+
+        print(payu_key)
+        print(payu_salt)
+
+        mode = 'TEST'
+        success_url = 'http://127.0.0.1:8000/donate/success'
+        failure_url = 'http://127.0.0.1:8000/donate/failure'
+
+        amount = request.POST.get('amount')
+        firstname = request.POST.get('firstname')
+        email = request.POST.get('email')
+        productinfo = request.POST.get('productinfo')
+        phone = request.POST.get('phone')
+        udf1 = request.POST.get('udf1')
+
+        payment_data = {
+            'txnid': txnid,
+            'amount': amount,
+            'firstname': firstname,
+            'email': email,
+            'phone': phone,
+            'productinfo': productinfo,
+            'udf1': udf1,
+        }
+
+        payu_data = payu.initiate_transaction(merchant_key=merchant_key, payu_salt= payu_salt,
+                                         payu_key=payu_key, mode=mode, success_url=success_url,
+                                         failure_url=failure_url, data=payment_data)
+        return JsonResponse(payu_data)
+
+    return render(request, 'checkout.html', {
+        'orphanage': orphanage
+    })
+
+
+@csrf_protect
+@csrf_exempt
+def success(request):
+    payu_success_data = payu.check_hash(dict(request.POST))
+    print(payu_success_data)
+    amount_donated = payu_success_data['data']['amount']
+    pk = int(payu_success_data['data']['udf1'])
+
+    orphanage = get_object_or_404(Orphanage, pk=pk)
+
+    try:
+        donation = Donor.objects.create(amount_donated=amount_donated, donated_to=orphanage)
+        donation.first_name = payu_success_data['data']['firstname']
+        donation.last_name = payu_success_data['data']['lastname']
+        donation.email = payu_success_data['data']['email']
+        donation.payuMoneyId = payu_success_data['data']['payuMoneyId']
+        donation.phone_number = payu_success_data['data']['phone']
+
+        donation.save()
+    except IntegrityError:
+        return HttpResponse(status=403)
+
+    return render(request, 'donation_success.html', {
+        'success_data': donation
+    })
+
+
+@csrf_protect
+@csrf_exempt
+def failure(request):
+    payu_failure_data = payu.check_hash(dict(request.POST))
+
+    failure_data ={
+        'first_name': payu_failure_data['data']['firstname'],
+        'amount': payu_failure_data['data']['amount'],
+    }
+
+    return render(request, 'donation_failure.html', {
+        'failure_data': failure_data
+    })

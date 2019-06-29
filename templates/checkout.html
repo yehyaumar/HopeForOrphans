@@ -1,0 +1,95 @@
+{% extends 'base_generic.html' %}
+{#{% block html_tag %}<html lang="en" onload="run_ajax()">{% endblock %}#}
+{% block content %}
+    <div class="sub-title">
+        Donate to {{ orphanage.name }}<span style="display: none" id="orphanage_pk">{{ orphanage.pk }}</span>
+    </div>
+
+
+    <div class="form-wrap-div form_wrap">
+        {% if error %}
+
+            <span style="color:red">Please fill all mandatory fields.</span>
+            <br/>
+            <br/>
+        {% endif %}
+
+        <form method="post" name="payuForm">
+            {% csrf_token %}
+            <input type="hidden" name="key"/>
+            <input type="hidden" name="hash_string"/>
+            <input type="hidden" name="hash"/>
+            <input type="hidden" name="txnid"/>
+            <table>
+                <tr>
+                    <td colspan="2"><input type="text" placeholder="Amount" name="amount" required/></td>
+                </tr>
+                <tr>
+                    <td><input type="text" maxlength="64" placeholder="Firstname" name="firstname" id="firstname"
+                               required/></td>
+                    <td><input type="text" maxlength="64" placeholder="Lastname" name="lastname" id="lastname"/></td>
+                </tr>
+                <tr>
+                    <td><input type="email" name="email" placeholder="Email" id="email" required/></td>
+                    <td><input type="text" maxlength="32" name="phone" placeholder="Phone" required/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><textarea maxlength="1024" placeholder="Donation Remarks" name="productinfo"
+                                              required></textarea></td>
+                </tr>
+                <tr>
+                    <td><input type="hidden" name="surl" size="64"/></td>
+                    <td><input type="hidden" name="furl" size="64"/></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <input type="hidden" name="service_provider" size="64"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><input type="hidden" name="curl" value=""/></td>
+                </tr>
+                {#            <tr>#}
+                {#                <td>Address1:</td>#}
+                {#                <td><input name="address1"/></td>#}
+                {#                <td>Address2:</td>#}
+                {#                <td><input name="address2"/></td>#}
+                {#            </tr>#}
+                {#            <tr>#}
+                {#                <td>City:</td>#}
+                {#                <td><input name="city"/></td>#}
+                {#                <td>State:</td>#}
+                {#                <td><input name="state"/></td>#}
+                {#            </tr>#}
+                {#            <tr>#}
+                {#                <td>Country:</td>#}
+                {#                <td><input name="country"/></td>#}
+                {#                <td>Zipcode:</td>#}
+                {#                <td><input name="zipcode"/></td>#}
+                {#            </tr>#}
+                <tr>
+                    {#                <td>UDF1:</td>#}
+                    <td><input type="hidden" name="udf1"/></td>
+                    {#                <td>UDF2:</td>#}
+                    {#                <td><input name="udf2"/></td>#}
+                </tr>
+                {#            <tr>#}
+                {#                <td>UDF3:</td>#}
+                {#                <td><input name="udf3"/></td>#}
+                {#                <td>UDF4:</td>#}
+                {#                <td><input name="udf4"/></td>#}
+                {#            </tr>#}
+                {#            <tr>#}
+                {#                <td>UDF5:</td>#}
+                {#                <td><input name="udf5"/></td>#}
+                {#            </tr>#}
+                <tr>
+                    <td colspan="2" class="submit-td"><input class="donate-btn" type="submit" value="Donate"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+{% endblock %}
