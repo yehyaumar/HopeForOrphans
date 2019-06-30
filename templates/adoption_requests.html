@@ -34,7 +34,7 @@
                             {{ req.request_date }}
                         </td>
                         <td class="card-cells">
-                            <a href="{% url 'orphan-detail' req.requested_for.pk %}">{{ req.requested_for.first_name }} {{ req.requested_for.last_name }}</a>
+                            <a class="bold-links" href="{% url 'orphan-detail' req.requested_for.pk %}">{{ req.requested_for.first_name }} {{ req.requested_for.last_name }}</a>
                         </td>
                         <td class="card-cells ">
                             <span class="status-span status-span-label
@@ -50,7 +50,7 @@
             </table>
 
         {% else %}
-            <p style="text-align: center">No orphanages added yet</p>
+            <p style="text-align: center">No adoption requests received yet</p>
         {% endif %}
     </div>
 

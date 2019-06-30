@@ -14,6 +14,9 @@
             </div>
 
             {% for orphanage in orphanages %}
+                {% if orphanage.user.is_active %}
+
+
                 <div class="card-div">
 
                     <div class="dp-div">
@@ -30,7 +33,7 @@
                     </div>
 
                 </div>
-
+                {% endif %}
             {% endfor %}
 
         {% else %}

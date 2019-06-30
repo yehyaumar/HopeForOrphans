@@ -179,7 +179,7 @@ class Orphanage(models.Model):
 
     facilities = models.ManyToManyField(Facilities, help_text='Facilities Available', blank=True)
 
-    display_pic = models.ImageField(upload_to='orphanage_dp/', help_text='Display picture for orphanage',
+    display_pic = models.ImageField(upload_to='orphanage_dp/', default='dream_home.gif', help_text='Display picture for orphanage',
                                     null=True, blank=True)
 
     def __str__(self):

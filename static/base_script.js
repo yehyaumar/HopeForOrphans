@@ -89,54 +89,68 @@ function handler(container, txt_box, name, url) {
 
 function run_ajax(e) {
     // e.preventDefault()
-        amount = $('input[name=amount]').val().trim();
-        firstname = $('input[name=firstname]').val().trim();
-        email = $('input[name=email]').val().trim();
-        productinfo = $('input[name=productinfo]').val().trim();
-        phone = $('input[name=phone]').val().trim();
-        orphanage_pk = $('#orphanage_pk').text();
-        $('input[name=udf1]').val(orphanage_pk);
-        udf1 = $('input[name=udf1]').val();
-        udf2 = $('textarea[name=udf2]').val().trim();
+    amount = $('input[name=amount]').val().trim();
+    firstname = $('input[name=firstname]').val().trim();
+    email = $('input[name=email]').val().trim();
+    productinfo = $('input[name=productinfo]').val().trim();
+    phone = $('input[name=phone]').val().trim();
+    orphanage_pk = $('#orphanage_pk').text();
+    $('input[name=udf1]').val(orphanage_pk);
+    udf1 = $('input[name=udf1]').val();
+    udf2 = $('textarea[name=udf2]').val().trim();
 
-        set_csrftoken();
+    set_csrftoken();
 
-        data = {
-            'amount': amount,
-            'firstname': firstname,
-            'email': email,
-            'productinfo': productinfo,
-            'phone': phone,
-            'udf1': udf1,
-            'udf2': udf2,
-        };
+    data = {
+        'amount': amount,
+        'firstname': firstname,
+        'email': email,
+        'productinfo': productinfo,
+        'phone': phone,
+        'udf1': udf1,
+        'udf2': udf2,
+    };
 
-        $.ajax({
-            url: '/donate/'+orphanage_pk,
-            type: 'post',
-            data: data,
-            dataType: 'json',
-            success: function (data) {
-                if (data){
-                    console.log(data);
+    $.ajax({
+        url: '/donate/' + orphanage_pk,
+        type: 'post',
+        data: data,
+        dataType: 'json',
+        success: function (data) {
+            if (data) {
+                console.log(data);
 
-                    $('input[name=key]').val(data.merchant_key);
-                    $('input[name=hash]').val(data.hashh);
+                $('input[name=key]').val(data.merchant_key);
+                $('input[name=hash]').val(data.hashh);
 
-                    $('input[name=hash_string]').val(data.hash_string);
-                    $('input[name=txnid]').val(data.txnid);
+                $('input[name=hash_string]').val(data.hash_string);
+                $('input[name=txnid]').val(data.txnid);
 
-                    $('input[name=surl]').val(data.surl);
-                    $('input[name=furl]').val(data.furl);
-                    $('input[name=service_provider]').val(data.service_provider);
+                $('input[name=surl]').val(data.surl);
+                $('input[name=furl]').val(data.furl);
+                $('input[name=service_provider]').val(data.service_provider);
 
-                    var payuForm = document.forms.payuForm;
-                    payuForm.action = data.action;
-                    payuForm.submit();
-                }
+                var payuForm = document.forms.payuForm;
+                payuForm.action = data.action;
+                payuForm.submit();
             }
-        });
-    }
+        }
+    });
+}
+
+function preview_image(input){
+
+        if (input.files && input.files[0]){
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#file_upload_preview').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+}
+
 
 jQuery(document).ready(function ($) {
     $('form[name=payuForm]').submit(run_ajax)
@@ -196,7 +210,7 @@ jQuery(document).ready(function ($) {
     });
 
     //Modal
-        var modal = $('#myModal');
+    var modal = $('#myModal');
 
     // var modal = document.getElementById('myModal');
     let pk;
@@ -218,11 +232,11 @@ jQuery(document).ready(function ($) {
         pk = target.parent().parent().find('span').first().text();
     });
 
-    modal.on('click', '.close',function () {
+    modal.on('click', '.close', function () {
         modal.css('display', 'none');
     });
 
-    modal.on('click', '.close-button',function () {
+    modal.on('click', '.close-button', function () {
         modal.css('display', 'none');
     });
 
@@ -230,7 +244,7 @@ jQuery(document).ready(function ($) {
         var form = $(this);
         data = form.serialize();
         console.log(pk);
-        data = data+'&pk='+pk;
+        data = data + '&pk=' + pk;
         set_csrftoken();
         $.ajax({
             url: '/ajax/adopt_request',
@@ -238,14 +252,14 @@ jQuery(document).ready(function ($) {
             type: form.attr('method'),
             dataType: 'json',
             success: function (data) {
-                if (data.form_is_valid){
+                if (data.form_is_valid) {
                     console.log('Success');
                     $('#myModal .modal-content').fadeOut(30, function () {
                         $('#myModal .modal-content').html(data.success_page).fadeIn();
                         $('.request-id').text(data.req_id)
 
                     });
-                }else {
+                } else {
                     $('#myModal .modal-content').html(data.html_form);
                 }
             }
@@ -287,7 +301,7 @@ jQuery(document).ready(function ($) {
     modal.on('submit', '.adoption-request-details', function () {
         var form = $(this);
         data = form.serialize();
-        data = data+'&request_id='+request_id;
+        data = data + '&request_id=' + request_id;
         set_csrftoken();
         $.ajax({
             url: 'ajax/adoption_approval',
@@ -295,7 +309,7 @@ jQuery(document).ready(function ($) {
             type: 'post',
             dataType: 'json',
             success: function (data) {
-                if (data.form_is_valid){
+                if (data.form_is_valid) {
                     $('#myModal .modal-content').fadeOut(30);
                     location.reload();
                 }
@@ -303,5 +317,9 @@ jQuery(document).ready(function ($) {
         });
         return false;
     });
+
+    $('#file_upload').change(function () {
+        preview_image(this)
+    })
 
 });

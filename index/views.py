@@ -57,7 +57,16 @@ def orphans_list(request):
 def orphanage_view(request, pk):
     orphanage = get_object_or_404(Orphanage, pk=pk)
 
-    return render(request, 'orphanage_profile.html', {'orphanage': orphanage})
+    donation_list = orphanage.donor_set.all()
+
+    total_donation_raised = 0
+    for donor in donation_list:
+        total_donation_raised += donor.amount_donated
+
+    return render(request, 'orphanage_profile.html', {
+        'orphanage': orphanage,
+        'total_donation_raised': total_donation_raised,
+    })
 
 
 def orphanages_orphan_list(request, pk):

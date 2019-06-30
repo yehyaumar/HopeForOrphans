@@ -37,7 +37,7 @@ def signup(request):
                 profile.display_pic = request.FILES['display_pic']
 
             profile.save()
-            return HttpResponse('Wait for the admin to activate your account after proper verification')
+            return render(request, 'registration/wait_for_confirmation.html')
         else:
             print(user_form.errors, profile_form.errors, address_form.errors, contact_form.errors)
     else:
@@ -66,7 +66,6 @@ def orphanage_profile(request):
     for donor in donation_list:
         total_donation_raised += donor.amount_donated
 
-    print(total_donation_raised)
     return render(request, 'orphanage_profile.html', {
         'orphanage': orphanage,
         'total_donation_raised': total_donation_raised

@@ -85,9 +85,11 @@
                     {#                <td>{{ profile_form.brief_desc.help_text }}</td>#}
                 </tr>
                 <tr>
-                    <td><label id="file_label" for="file_upload">Upload Image</label></td>
-                    <td>{{ profile_form.display_pic }}</td>
-                    {#                <td>{{ profile_form.display_pic.help_text }}</td>#}
+                    <td><img id="file_upload_preview"/></td>
+                    <td><label id="file_label" for="file_upload">Upload Image</label>
+                    {{ profile_form.display_pic }}
+                    </td>
+
                 </tr>
                 <tr>
                     <td colspan="2" class="submit-td">

@@ -150,7 +150,7 @@ a {
 }
 
 .bottom-links:hover, .bottom-links:active {
-    color: #DEE5E7;
+    color: #81ba6a;
 }
 
 /*Login Page*/
@@ -162,14 +162,6 @@ a {
     text-align: center;
     line-height: 3em;
     width: 100%;
-}
-
-#lost_pass_link:link, #lost_pass_link:visited {
-    color: #393939;
-}
-
-#lost_pass_link:hover, #lost_pass_link:active {
-    color: #A2A7A9;
 }
 
 .link-in-subtitle-bar:link, .link-in-subtitle-bar:visited {
@@ -411,6 +403,10 @@ input[type=submit]:hover, .donate-btn:hover {
     background-color: darkseagreen;
 }
 
+#file_upload_preview{
+    width: 75%;
+}
+
 input[type=number] {
 }
 
@@ -431,6 +427,11 @@ table {
 
 table td {
     word-wrap: break-word
+}
+
+.email-span{
+    font-weight: bold;
+    color: #749569;
 }
 
 /*Profile*/
@@ -915,6 +916,16 @@ table td {
     border-bottom: 1px solid #eaeaea;
 }
 
+.bold-links:link, .bold-links:visited{
+    color: #393939;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.bold-links:hover, .bold-links:active{
+    color: #E86252;
+}
+
 .request-label {
     display: inline-block;
     background-color: #393939;
@@ -1006,6 +1017,7 @@ table td {
     background-color: #F9F9F9;
     border: 1px solid #EAF1E7;
     padding: 25px;
+    margin: 20% 25%;
 }
 .info-span{
     font-size: 18px;
