@@ -679,6 +679,15 @@ table td {
     background-color: #393939;
 }
 
+.green-link:link, .green-link:visited{
+    font-weight: bold;
+    color: #749569;
+}
+
+.green-link:hover, .green-link:active{
+    color: #81ba6a;
+}
+
 .status-div {
     display: inline-block;
     color: white;

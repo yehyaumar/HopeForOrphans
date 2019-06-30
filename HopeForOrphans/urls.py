@@ -32,7 +32,7 @@ urlpatterns += [
     path('', include('index.urls')),
     path('home/', include('home.urls')),
     path('signup/', home_views.signup, name='signup'),
-    path('login/', auth_views.LoginView.as_view(authentication_form=MyAuthForm), name='login'),
+    path('login/', home_views.login_view, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
 #

@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse, JsonResponse
@@ -5,7 +6,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 # Create your views here.
 from django.template.loader import render_to_string
 
-from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm, OrphanForm, AdoptionApprovalForm
+from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm, OrphanForm, AdoptionApprovalForm, \
+    MyAuthForm
 from home.models import Orphanage, IncomeSource, Facilities, Orphan, AdoptionRequest
 from users.forms import CustomUserCreationForm
 
@@ -20,14 +22,11 @@ def signup(request):
         if user_form.is_valid() and profile_form.is_valid() \
                 and address_form.is_valid() and contact_form.is_valid():
 
-            user = user_form.save(commit=False)
+            user = user_form.save()
             profile = profile_form.save(commit=False)
             address = address_form.save()
             contact = contact_form.save()
 
-            user.is_active = False
-
-            user.save()
             profile.user = user
 
             profile.address = address
@@ -53,6 +52,35 @@ def signup(request):
                       'address_form':address_form,
                       'contact_form':contact_form,
                   })
+
+
+def login_view(request):
+    error = ''
+    if request.method == 'POST':
+        email = request.POST.get('username')
+        password = request.POST['password']
+        form = MyAuthForm(request.POST)
+        user = authenticate(email=email, password=password)
+
+        if user and not(user.is_staff or user.is_superuser):
+            is_activated = get_object_or_404(Orphanage, user=user).activated
+
+            if is_activated:
+                login(request, user)
+                return redirect('profile')
+            else:
+                error = 'in_active'
+                return render(request, 'registration/login.html', {
+                    'form': form, 'error': error
+                })
+
+        error = "incorrect"
+    else:
+        form = MyAuthForm(request.POST)
+
+    return render(request, 'registration/login.html', {
+        'form' : form, 'error' : error
+    })
 
 
 @login_required

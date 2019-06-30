@@ -167,7 +167,7 @@ class Orphanage(models.Model):
     address = models.OneToOneField(Address, on_delete=models.SET_NULL, null=True, help_text='Address')
     contact = models.OneToOneField(Contact, on_delete=models.SET_NULL, null=True, help_text='Contact')
 
-    bank_details = models.OneToOneField(BankDetail, on_delete=models.SET_NULL, null=True, help_text='Bank details')
+    bank_details = models.OneToOneField(BankDetail, on_delete=models.SET_NULL, null=True, blank=True, help_text='Bank details')
 
     def display_incomesrc(self):
         return ', '.join(income.name for income in self.income_source.all()[:3])
@@ -181,6 +181,8 @@ class Orphanage(models.Model):
 
     display_pic = models.ImageField(upload_to='orphanage_dp/', default='dream_home.gif', help_text='Display picture for orphanage',
                                     null=True, blank=True)
+
+    activated = models.BooleanField('Activated', default=False)
 
     def __str__(self):
         return '{0}'.format(self.name)

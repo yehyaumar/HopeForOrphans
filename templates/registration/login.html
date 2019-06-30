@@ -16,13 +16,21 @@
             <table>
                 <tr>
                     <td>
-                        {% if form.errors %}
-                            {% for key, error in form.errors.items %}
-
-                            <span>{{ error}}</span>
-
-                            {% endfor %}
+{#                        {% if form.errors %}#}
+{#                            {% for key, err in form.errors.items %}#}
+{##}
+{#                            <span>{{ err}}</span>#}
+{##}
+{#                            {% endfor %}#}
 {#                            <p class="form-error">Your user name and password didn't match.<br>Please try again</p>#}
+{#                        {% endif %}#}
+                        {% if error == 'in_active' %}
+                            <span class="form-error">Your account has not been activated yet, please contact
+                                <a class="green-link" href="mailto:yehyaumar@gmail.com?Subject=Activate%20Account"
+                                   target="_top">Admin</a> to activate your account.</span>
+                        {% elif error == 'incorrect'%}
+                            <span class="form-error">Email or password is incorrect.
+                                Note that both fields may be case-sensitive</span>
                         {% endif %}
                     </td>
                 </tr>
