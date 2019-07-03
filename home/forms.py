@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from django.forms import CheckboxSelectMultiple, SelectDateWidget
 
 from home.models import Orphanage, Contact, Address, BankDetail, Orphan, AdoptionRequest
@@ -77,10 +77,40 @@ class MyAuthForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(MyAuthForm, self).__init__(*args, **kwargs)
 
-        self.fields['username'].widget = forms.TextInput(
+        self.fields['username'].widget = forms.EmailInput(
             attrs={'placeholder': 'Email'})
         self.fields['password'].widget = forms.PasswordInput(
             attrs={'placeholder':'Password'})
+
+
+class MyPasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(MyPasswordResetForm, self).__init__(*args, **kwargs)
+
+        self.fields['email'].widget = forms.EmailInput(
+            attrs={'placeholder': 'Email'})
+
+
+class MySetPasswordForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(MySetPasswordForm, self).__init__(*args, **kwargs)
+
+        self.fields['new_password1'].widget = forms.PasswordInput(
+            attrs={'placeholder': 'New Password'})
+        self.fields['new_password2'].widget = forms.PasswordInput(
+            attrs={'placeholder':'Confirm New Password'})
+
+
+class MyPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(MyPasswordChangeForm, self).__init__(*args, **kwargs)
+
+        self.fields['old_password'].widget = forms.PasswordInput(
+            attrs={'placeholder': 'Old Password'})
+        self.fields['new_password1'].widget = forms.PasswordInput(
+            attrs={'placeholder': 'New Password'})
+        self.fields['new_password2'].widget = forms.PasswordInput(
+            attrs={'placeholder': 'Confirm New Password'})
 
 
 class AdoptionRequestForm(forms.ModelForm):
