@@ -34,7 +34,14 @@
                             {{ req.request_date }}
                         </td>
                         <td class="card-cells">
-                            <a class="bold-links" href="{% url 'orphan-detail' req.requested_for.pk %}">{{ req.requested_for.first_name }} {{ req.requested_for.last_name }}</a>
+                            <div class="dropdown">
+                                <button class="orphan-dropbtn">{{ req.requested_for.first_name }} {{ req.requested_for.last_name }}</button>
+                                <div class="dropdown-content">
+                                    <span>UID: {{ req.requested_for.pk }}</span>
+                                    <span>Age: {{ req.requested_for.calculate_age }}</span>
+                                    <span>Gender: {{ req.requested_for.get_gender_display }}</span>
+                                </div>
+                            </div>
                         </td>
                         <td class="card-cells ">
                             <span class="status-span status-span-label

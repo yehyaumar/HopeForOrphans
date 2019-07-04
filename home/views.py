@@ -136,6 +136,7 @@ def edit_profile(request):
             print(profile_form.errors, address_form.errors, contact_form.errors)
 
     return render(request, 'edit_profile.html',{
+        'orphanage': orphanage,
         'profile_form': profile_form,
         'address_form': address_form,
         'contact_form': contact_form,

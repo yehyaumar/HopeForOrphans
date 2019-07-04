@@ -124,6 +124,13 @@ a {
     cursor: pointer;
 }
 
+.orphan-dropbtn{
+    padding: 10px 14px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
 .dropdown{
     position: relative;
     display: inline-block;
@@ -138,7 +145,7 @@ a {
     z-index: 1;
 }
 
-.dropdown-content a{
+.dropdown-content a, span{
     color: #393939;
     padding: 12px 16px;
     display: block;
