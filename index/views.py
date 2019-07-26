@@ -228,3 +228,9 @@ def failure(request):
     return render(request, 'donation_failure.html', {
         'failure_data': failure_data
     })
+
+def about_us(request):
+    return render(request, 'about_us.html')
+
+def contact_us(request):
+    return render(request, 'contact_us.html')

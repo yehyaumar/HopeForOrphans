@@ -12,5 +12,7 @@ urlpatterns = [
     path('donate/<int:pk>', views.donate, name='donate'),
     path('donate/success', views.success, name='donate-success'),
     path('donate/failure', views.failure, name='donate-failure'),
+    path('about-us', views.about_us, name='about-us'),
+    path('contact-us', views.contact_us, name='contact-us')
 
 ]
