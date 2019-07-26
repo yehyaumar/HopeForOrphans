@@ -1,0 +1,10 @@
+Hi,
+Your adoption request for {{ orphan_name }} has been {% if status == 'a' %}approved{% elif status == 'd' %}declined{% elif status == 'p' %}still pending{% endif %}.
+{% if status == 'a' %}
+Please visit the orphanage at their address as soon as possible which you can get from their profile.
+{% else %}
+Please contact the concerned orphanage for any grievance.
+{% endif %}
+
+Regards
+Hope for Orphans

@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 # Create your views here.
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
 
+from HopeForOrphans import settings
 from home.forms import OrphanageSignUpForm, AddressForm, ContactForm, BankDetailForm, OrphanForm, AdoptionApprovalForm, \
     MyAuthForm
 from home.models import Orphanage, IncomeSource, Facilities, Orphan, AdoptionRequest
@@ -335,6 +337,13 @@ def adoption_approval(request):
             if adoption_approval_form.is_valid():
                 adoption_approval_form.save()
                 data['form_is_valid'] = True
+                template = get_template('emails/adoption_req_response.html')
+
+                email_message = template.render({'orphan_name': adoption_request.requested_for.first_name + ' ' +
+                                                                adoption_request.requested_for.last_name,
+                                                 'status': adoption_request.approved})
+                send_mail('Hope for Orphans - Adoption Request Update', email_message,
+                          recipient_list=[str(adoption_request.email), ], from_email=settings.EMAIL_HOST_USER)
 
             else:
                 data['form_is_valid'] = False

@@ -1,4 +1,5 @@
 from MySQLdb._exceptions import IntegrityError
+from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -6,11 +7,12 @@ from django.shortcuts import render, get_object_or_404
 import hashlib
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
+from HopeForOrphans import settings
 from .payumoney import PAYU
 
 
 # Create your views here.
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
 
 from home.forms import AdoptionRequestForm, AddressForm
 from home.models import Orphanage, Orphan,  Donor
@@ -105,6 +107,14 @@ def adoption_request(request):
             adoption_req.address = address
             adoption_req.requested_for = orphan
             adoption_req.save()
+
+            template = get_template('emails/adoption_request_email.html')
+
+            email_message = template.render({'orphan_name': adoption_req.requested_for.first_name + ' ' +
+                                            adoption_req.requested_for.last_name,
+                            'request_id': adoption_req.request_id})
+            send_mail('Hope for Orphans - Adoption Request', email_message,
+                      recipient_list=[str(adoption_req.email),], from_email=settings.EMAIL_HOST_USER)
             data['form_is_valid'] = True
             data['req_id'] = adoption_req.request_id
             data['success_page'] = render_to_string(template_name='partial_success_adopt_req.html')
