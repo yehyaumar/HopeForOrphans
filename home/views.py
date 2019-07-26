@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse, JsonResponse
@@ -75,6 +75,9 @@ def login_view(request):
                 return render(request, 'registration/login.html', {
                     'form': form, 'error': error
                 })
+        elif user and (user.is_staff or user.is_superuser):
+            login(request, user)
+            return redirect('../../admin')
 
         error = "incorrect"
     else:
@@ -85,7 +88,12 @@ def login_view(request):
     })
 
 
+def is_simple_user(user):
+    return not(user.is_staff or user.is_superuser)
+
+
 @login_required
+@user_passes_test(is_simple_user)
 def orphanage_profile(request):
     user = request.user
 
@@ -103,6 +111,7 @@ def orphanage_profile(request):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def edit_profile(request):
     user = request.user
     orphanage = get_object_or_404(Orphanage, user=user)
@@ -147,6 +156,7 @@ def edit_profile(request):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def add_orphan(request):
     user = request.user
     orphanage = get_object_or_404(Orphanage, user=user)
@@ -169,6 +179,7 @@ def add_orphan(request):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def edit_orphan(request, pk):
     user = request.user
     orphanage = get_object_or_404(Orphanage, user=user)
@@ -195,6 +206,7 @@ def edit_orphan(request, pk):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def delete_orphan(request):
     user = request.user
     orphanage = get_object_or_404(Orphanage, user=user)
@@ -224,6 +236,7 @@ def delete_orphan(request):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def my_orphans(request):
     user = request.user
 
@@ -256,6 +269,7 @@ def orphan_detail(request, pk):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def add_income_src(request):
     income_src = request.POST.get('value', None)
     print(income_src)
@@ -276,6 +290,7 @@ def add_income_src(request):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def add_facility(request):
     facility = request.POST.get('value', None)
     # orphanage = Orphanage.objects.get(user=request.user)
@@ -293,6 +308,7 @@ def add_facility(request):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def adoption_requests(request):
     user = request.user
     orphanage = get_object_or_404(Orphanage, user=user)
@@ -319,6 +335,7 @@ def adoption_requests(request):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def adoption_approval(request):
     data = dict()
     context = dict()
@@ -361,6 +378,7 @@ def adoption_approval(request):
 
 
 @login_required
+@user_passes_test(is_simple_user)
 def donations(request):
     user = request.user
     orphanage = get_object_or_404(Orphanage, user=user)

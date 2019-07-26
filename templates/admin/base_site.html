@@ -1,0 +1,54 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Admin | Hope for Orphans{% endblock %}
+{% block extrastyle %}
+    <style>
+        #header {
+            background: #5f8a4f;
+        }
+
+        #branding {
+            color: white;
+            font-weight: bold;
+        {#left: 4em;#}{#margin-bottom: 14px;#} font-size: 20px;
+        }
+
+        .dashboard #content {
+            width: 80%;
+            margin: 2%;
+            padding: 0;
+        }
+
+        input[type=submit], input[type=submit].default {
+            margin: 1px 0;
+            border-radius: 5px;
+            padding: 12px 16px;
+            border: none;
+
+
+            background-color: #5f8a4f;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        input[type=submit]:hover, input[type=submit].default:hover {
+            background-color: #81ba6a;
+        }
+
+        .module h2, .module caption, .inline-group h2, div.breadcrumbs {
+            background: #81ba6a;
+        }
+
+        a:link, a:visited {
+            color: #5f8a4f;
+        }
+
+        a:hover {
+            color: #81ba6a;
+        }
+    </style>
+
+{% endblock %}
+
+{% block branding %}Hope for Orphans Admin Panel{% endblock %}
