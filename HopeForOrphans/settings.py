@@ -84,6 +84,7 @@ WSGI_APPLICATION = 'HopeForOrphans.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE'),
+        'HOST': os.getenv('DB_URL'),
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
