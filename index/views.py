@@ -1,4 +1,5 @@
-from MySQLdb._exceptions import IntegrityError
+# from MySQLdb._exceptions import IntegrityError
+from psycopg2._psycopg import IntegrityError
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse, HttpResponse
